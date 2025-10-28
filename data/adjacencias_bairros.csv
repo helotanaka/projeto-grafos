@@ -1,259 +1,254 @@
 bairro_origem,bairro_destino,logradouro,observacao,peso
-Recife,Santo Amaro,,,1.0
-Recife,Santo Antônio,,,1.0
-Recife,São José,,,1.0
-Santo Amaro,Soledade,,,1.0
-Santo Amaro,Santo Antônio,,,1.0
-Boa Vista,Cabanga,,,1.0
-Boa Vista,Coelhos,,,1.0
-Boa Vista,Derby,,,1.0
-Boa Vista,Graças,,,1.0
-Boa Vista,Ilha do Leite,,,1.0
-Boa Vista,Paissandu,,,1.0
-Boa Vista,Santo Amaro,,,1.0
-Boa Vista,Santo Antônio,,,1.0
-Boa Vista,Soledade,,,1.0
-Cabanga,Ilha Joana Bezerra,,,1.0
-Cabanga,Pina,,,1.0
-Cabanga,São José,,,1.0
-Ilha do Leite,Paissandu,,,1.0
-Paissandu,Santo Antônio,,,1.0
-Santo Antônio,São José,,,1.0
-São José,Santo Antônio,,,1.0
-Coelhos,Paissandu,,,1.0
-Coelhos,Santo Antônio,,,1.0
-Coelhos,São José,,,1.0
-Coelhos,Ilha Joana Bezerra,,,1.0
-Ilha Joana Bezerra,São José,,,1.0
-Ilha Joana Bezerra,Paissandu,,,1.0
-Ilha Joana Bezerra,Ipsep,,,1.0
-Ilha Joana Bezerra,Ilha do Retiro,,,1.0
-Campina do Barreto,Campo Grande,,,1.0
-Campina do Barreto,Encruzilhada,,,1.0
-Campina do Barreto,Santo Amaro,,,1.0
-Campina do Barreto,Torreão,,,1.0
-Campo Grande,Santo Amaro,,,1.0
-Campo Grande,Encruzilhada,,,1.0
-Campo Grande,Hipódromo,,,1.0
-Campo Grande,Torreão,,,1.0
-Encruzilhada,Santo Amaro,,,1.0
-Encruzilhada,Soledade,,,1.0
-Encruzilhada,Ponto de Parada,,,1.0
-Encruzilhada,Rosarinho,,,1.0
-Encruzilhada,Torreão,,,1.0
-Encruzilhada,Espinheiro,,,1.0
-Encruzilhada,Hipódromo,,,1.0
-Hipódromo,Tamarineira,,,1.0
-Hipódromo,Santana,,,1.0
-Hipódromo,Ponto de Parada,,,1.0
-Hipódromo,Parnamirim,,,1.0
-Ponto de Parada,Rosarinho,,,1.0
-Ponto de Parada,Tamarineira,,,1.0
-Rosarinho,Tamarineira,,,1.0
-Afogados,Areias,,,1.0
-Afogados,Bongi,,,1.0
-Afogados,Ilha Joana Bezerra,,,1.0
-Afogados,Ilha do Retiro,,,1.0
-Afogados,Ipsep,,,1.0
-Afogados,Madalena,,,1.0
-Afogados,Mustardinha,,,1.0
-Afogados,Prado,,,1.0
-Alto José Bonifácio,Alto José do Pinho,,,1.0
-Alto José Bonifácio,Brejo do Beberibe,,,1.0
-Alto José Bonifácio,Bomba do Hemetério,,,1.0
-Alto José Bonifácio,Fundão,,,1.0
-Alto José Bonifácio,Linha do Tiro,,,1.0
-Alto José Bonifácio,Morro da Conceição,,,1.0
-Alto José Bonifácio,Tamarineira,,,1.0
-Alto José do Pinho,Alto do Mandu,,,1.0
-Alto José do Pinho,Morro da Conceição,,,1.0
-Alto José do Pinho,Tamarineira,,,1.0
-Alto Santa Teresinha,Bomba do Hemetério,,,1.0
-Alto Santa Teresinha,Cajueiro,,,1.0
-Alto Santa Teresinha,Vasco da Gama,,,1.0
-Alto do Mandu,Apipucos,,,1.0
-Alto do Mandu,Casa Amarela,,,1.0
-Alto do Mandu,Monteiro,,,1.0
-Alto do Mandu,Morro da Conceição,,,1.0
-Alto do Mandu,Tamarineira,,,1.0
-Apipucos,Casa Forte,,,1.0
-Apipucos,Dois Irmãos,,,1.0
-Apipucos,Monteiro,,,1.0
-Apipucos,Poço da Panela,,,1.0
-Apipucos,Sítios,,,1.0
-Areias,Barro,,,1.0
-Areias,Caçote,,,1.0
-Areias,Estância,,,1.0
-Areias,Imbiribeira,,,1.0
-Areias,Ipsep,,,1.0
-Areias,Jiquiá,,,1.0
-Areias,Mustardinha,,,1.0
-Barro,Caçote,,,1.0
-Barro,Cohab,,,1.0
-Barro,Estância,,,1.0
-Barro,Ibura,,,1.0
-Barro,Imbiribeira,,,1.0
-Barro,Sancho,,,1.0
-Beberibe,Dois Unidos,,,1.0
-Beberibe,Fundão,,,1.0
-Beberibe,Porto da Madeira,,,1.0
-Boa Viagem,Brasília Teimosa,,,1.0
-Boa Viagem,Ibura,,,1.0
-Boa Viagem,Ilha Joana Bezerra,,,1.0
-Boa Viagem,Imbiribeira,,,1.0
-Boa Viagem,Ipsep,,,1.0
-Boa Viagem,Pina,,,1.0
-Bomba do Hemetério,Cajueiro,,,1.0
-Bomba do Hemetério,Fundão,,,1.0
-Bomba do Hemetério,Morro da Conceição,,,1.0
-Bomba do Hemetério,Vasco da Gama,,,1.0
-Bongi,Caxangá,,,1.0
-Bongi,Engenho do Meio,,,1.0
-Bongi,Mustardinha,,,1.0
-Bongi,Prado,,,1.0
-Bongi,San Martin,,,1.0
-Bongi,Torrões,,,1.0
-Bongi,Zumbi,,,1.0
-Brasília Teimosa,Cabanga,,,1.0
-Brasília Teimosa,Ilha Joana Bezerra,,,1.0
-Brasília Teimosa,Pina,,,1.0
-Brejo de Guabiraba,Guabiraba,,,1.0
-Brejo de Guabiraba,Passarinho,,,1.0
-Brejo de Guabiraba,Pau-Ferro,,,1.0
-Brejo de Guabiraba,Sítio dos Pintos,,,1.0
-Brejo do Beberibe,Dois Unidos,,,1.0
-Brejo do Beberibe,Fundão,,,1.0
-Brejo do Beberibe,Linha do Tiro,,,1.0
-Brejo do Beberibe,Macaxeira,,,1.0
-Brejo do Beberibe,Nova Descoberta,,,1.0
-Brejo do Beberibe,Passarinho,,,1.0
-Cajueiro,Campina do Barreto,,,1.0
-Caçote,Cohab,,,1.0
-Caçote,Coqueiral,,,1.0
-Caçote,Estância,,,1.0
-Caçote,Jardim São Paulo,,,1.0
-Caçote,Mangueira,,,1.0
-Caçote,Mustardinha,,,1.0
-Caçote,San Martin,,,1.0
-Caçote,Sancho,,,1.0
-Casa Amarela,Casa Forte,,,1.0
-Casa Amarela,Monteiro,,,1.0
-Casa Amarela,Poço da Panela,,,1.0
-Casa Amarela,Tamarineira,,,1.0
-Casa Forte,Parnamirim,,,1.0
-Casa Forte,Poço da Panela,,,1.0
-Casa Forte,Santana,,,1.0
-Caxangá,Cidade Universitária,,,1.0
-Caxangá,Engenho do Meio,,,1.0
-Caxangá,Iputinga,,,1.0
-Caxangá,Jardim São Paulo,,,1.0
-Caxangá,San Martin,,,1.0
-Caxangá,Torrões,,,1.0
-Caxangá,Várzea,,,1.0
-Cidade Universitária,Curado,,,1.0
-Cidade Universitária,Jardim São Paulo,,,1.0
-Cidade Universitária,Várzea,,,1.0
-Cohab,Coqueiral,,,1.0
-Cohab,Ibura,,,1.0
-Cohab,Jordão,,,1.0
-Cohab,Sancho,,,1.0
-Coqueiral,Curado,,,1.0
-Coqueiral,Ibura,,,1.0
-Coqueiral,Sancho,,,1.0
-Coqueiral,Tejipió,,,1.0
-Coqueiral,Totó,,,1.0
-Cordeiro,Engenho do Meio,,,1.0
-Cordeiro,Iputinga,,,1.0
-Cordeiro,Torre,,,1.0
-Cordeiro,Torrões,,,1.0
-Córrego do Jenipapo,Iputinga,,,1.0
-Córrego do Jenipapo,Macaxeira,,,1.0
-Córrego do Jenipapo,Mangabeira,,,1.0
-Córrego do Jenipapo,Nova Descoberta,,,1.0
-Curado,Ibura,,,1.0
-Curado,Jardim São Paulo,,,1.0
-Curado,Sancho,,,1.0
-Curado,Tejipió,,,1.0
-Derby,Graças,,,1.0
-Derby,Ilha do Leite,,,1.0
-Derby,Ilha do Retiro,,,1.0
-Derby,Madalena,,,1.0
-Derby,Paissandu,,,1.0
-Dois Irmãos,Monteiro,,,1.0
-Dois Irmãos,Pau-Ferro,,,1.0
-Dois Irmãos,Sítio dos Pintos,,,1.0
-Dois Irmãos,Sítios,,,1.0
-Dois Unidos,Passarinho,,,1.0
-Engenho do Meio,Iputinga,,,1.0
-Engenho do Meio,San Martin,,,1.0
-Engenho do Meio,Torre,,,1.0
-Engenho do Meio,Várzea,,,1.0
-Engenho do Meio,Zumbi,,,1.0
-Espinheiro,Graças,,,1.0
-Espinheiro,Rosarinho,,,1.0
-Espinheiro,Soledade,,,1.0
-Espinheiro,Torreão,,,1.0
-Estância,Imbiribeira,,,1.0
-Fundão,Linha do Tiro,,,1.0
-Fundão,Porto da Madeira,,,1.0
-Graças,Ilha do Leite,,,1.0
-Graças,Jaqueira,,,1.0
-Graças,Madalena,,,1.0
-Graças,Parnamirim,,,1.0
-Graças,Poço,,,1.0
-Graças,Rosarinho,,,1.0
-Graças,Soledade,,,1.0
-Graças,Torreão,,,1.0
-Guabiraba,Nova Descoberta,,,1.0
-Guabiraba,Passarinho,,,1.0
-Guabiraba,Pau-Ferro,,,1.0
-Guabiraba,Sítio dos Pintos,,,1.0
-Ibura,Imbiribeira,,,1.0
-Ibura,Ipsep,,,1.0
-Ibura,Jordão,,,1.0
-Ibura,Sancho,,,1.0
-Ilha do Retiro,Madalena,,,1.0
-Ilha do Retiro,Paissandu,,,1.0
-Imbiribeira,Ipsep,,,1.0
-Iputinga,Macaxeira,,,1.0
-Iputinga,Nova Descoberta,,,1.0
-Iputinga,Torre,,,1.0
-Iputinga,Várzea,,,1.0
-Jaqueira,Monteiro,,,1.0
-Jaqueira,Parnamirim,,,1.0
-Jaqueira,Poço,,,1.0
-Jaqueira,Poço da Panela,,,1.0
-Jaqueira,Rosarinho,,,1.0
-Jaqueira,Tamarineira,,,1.0
-Jardim São Paulo,San Martin,,,1.0
-Jardim São Paulo,Sancho,,,1.0
-Jiquiá,Mangueira,,,1.0
-Jiquiá,Mustardinha,,,1.0
-Linha do Tiro,Morro da Conceição,,,1.0
-Macaxeira,Nova Descoberta,,,1.0
-Madalena,Prado,,,1.0
-Madalena,Torre,,,1.0
-Madalena,Torreão,,,1.0
-Mangabeira,Morro da Conceição,,,1.0
-Mangabeira,Nova Descoberta,,,1.0
-Mangabeira,Vasco da Gama,,,1.0
-Mangueira,Mustardinha,,,1.0
-Mangueira,San Martin,,,1.0
-Monteiro,Poço da Panela,,,1.0
-Monteiro,Sítios,,,1.0
-Monteiro,Tamarineira,,,1.0
-Morro da Conceição,Nova Descoberta,,,1.0
-Morro da Conceição,Tamarineira,,,1.0
-Morro da Conceição,Vasco da Gama,,,1.0
-Nova Descoberta,Passarinho,,,1.0
-Parnamirim,Poço,,,1.0
-Parnamirim,Santana,,,1.0
-Pau-Ferro,Sítio dos Pintos,,,1.0
-Pau-Ferro,Várzea,,,1.0
-Prado,Torre,,,1.0
-Prado,Zumbi,,,1.0
-San Martin,Torrões,,,1.0
-Santana,Tamarineira,,,1.0
-Tejipió,Totó,,,1.0
-Torre,Zumbi,,,1.0
-Torrões,Várzea,,,1.0
+recife,santo amaro,ponte do limoeiro,,1.0
+recife,santo antonio,ponte mauricio de nassau,,1.0
+recife,sao jose,ponte giratoria,,1.0
+santo amaro,santo antonio,,,1.0
+santo amaro,boa vista,,,1.0
+santo amaro,soledade,,,1.0
+santo amaro,espinheiro,,,1.0
+santo amaro,torreao,,,1.0
+santo amaro,campo grande,,,1.0
+boa vista,santo antonio,,,1.0
+boa vista,coelhos,,,1.0
+boa vista,ilha do leite,,,1.0
+boa vista,paissandu,,,1.0
+boa vista,derby,,,1.0
+boa vista,gracas,,,1.0
+boa vista,espinheiro,,,1.0
+boa vista,soledade,,,1.0
+cabanga,pina,,,1.0
+cabanga,afogados,,,1.0
+cabanga,sao jose,,,1.0
+ilha do leite,coelhos,,,1.0
+ilha do leite,ilha joana bezerra,,,1.0
+ilha do leite,paissandu,,,1.0
+paissandu,ilha joana bezerra,,,1.0
+paissandu,ilha do retiro,,,1.0
+paissandu,derby,,,1.0
+santo antonio,sao jose,,,1.0
+santo antonio,coelhos,,,1.0
+sao jose,brasilia teimosa,,,1.0
+sao jose,pina,,,1.0
+sao jose,afogados,,,1.0
+sao jose,ilha joana bezerra,,,1.0
+sao jose,coelhos,,,1.0
+coelhos,ilha joana bezerra,,,1.0
+ilha joana bezerra,afogados,,,1.0
+ilha joana bezerra,ilha do retiro,,,1.0
+arruda,campo grande,,,1.0
+arruda,ponto de parada,,,1.0
+arruda,tamarineira,,,1.0
+arruda,mangabeira,,,1.0
+arruda,bomba do hemeterio,,,1.0
+arruda,agua fria,,,1.0
+arruda,campina do barreto,,,1.0
+arruda,peixinhos,,,1.0
+campina do barreto,agua fria,,,1.0
+campina do barreto,fundao,,,1.0
+campina do barreto,cajueiro,,,1.0
+campina do barreto,peixinhos,,,1.0
+campo grande,torreao,,,1.0
+campo grande,encruzilhada,,,1.0
+campo grande,hipodromo,,,1.0
+campo grande,ponto de parada,,,1.0
+campo grande,peixinhos,,,1.0
+encruzilhada,torreao,,,1.0
+encruzilhada,espinheiro,,,1.0
+encruzilhada,aflitos,,,1.0
+encruzilhada,gracas,,,1.0
+encruzilhada,rosarinho,,,1.0
+encruzilhada,ponto de parada,,,1.0
+encruzilhada,hipodromo,,,1.0
+hipodromo,ponto de parada,,,1.0
+ponto de parada,tamarineira,,,1.0
+ponto de parada,rosarinho,,,1.0
+rosarinho,aflitos,,,1.0
+rosarinho,gracas,,,1.0
+rosarinho,tamarineira,,,1.0
+torreao,espinheiro,,,1.0
+agua fria,bomba do hemeterio,,,1.0
+agua fria,fundao,,,1.0
+agua fria,porto da madeira,,,1.0
+agua fria,beberibe,,,1.0
+agua fria,linha do tiro,,,1.0
+agua fria,alto santa terezinha,,,1.0
+alto santa terezinha,bomba do hemeterio,,,1.0
+alto santa terezinha,alto jose do pinho,,,1.0
+alto santa terezinha,morro da conceicao,,,1.0
+alto santa terezinha,alto jose bonifacio,,,1.0
+alto santa terezinha,linha do tiro,,,1.0
+bomba do hemeterio,mangabeira,,,1.0
+bomba do hemeterio,alto jose do pinho,,,1.0
+cajueiro,fundao,,,1.0
+cajueiro,porto da madeira,,,1.0
+fundao,porto da madeira,,,1.0
+porto da madeira,beberibe,,,1.0
+beberibe,linha do tiro,,,1.0
+beberibe,dois unidos,,,1.0
+dois unidos,linha do tiro,,,1.0
+dois unidos,brejo do beberibe,,,1.0
+dois unidos,passarinho,,,1.0
+linha do tiro,alto jose bonifacio,,,1.0
+linha do tiro,brejo do beberibe,,,1.0
+aflitos,espinheiro,,,1.0
+aflitos,gracas,,,1.0
+alto do mandu,casa amarela,,,1.0
+alto do mandu,monteiro,,,1.0
+alto do mandu,apipucos,,,1.0
+alto do mandu,macaxeira,,,1.0
+alto do mandu,nova descoberta,,,1.0
+apipucos,monteiro,,,1.0
+apipucos,iputinga,,,1.0
+apipucos,caxanga,,,1.0
+apipucos,dois irmaos,,,1.0
+apipucos,corrego do jenipapo,,,1.0
+apipucos,macaxeira,,,1.0
+casa amarela,nova descoberta,,,1.0
+casa amarela,vasco da gama,,,1.0
+casa amarela,morro da conceicao,,,1.0
+casa amarela,alto jose do pinho,,,1.0
+casa amarela,mangabeira,,,1.0
+casa amarela,tamarineira,,,1.0
+casa amarela,parnamirim,,,1.0
+casa amarela,casa forte,,,1.0
+casa amarela,poco,,,1.0
+casa amarela,monteiro,,,1.0
+casa forte,parnamirim,,,1.0
+casa forte,santana,,,1.0
+casa forte,poco,,,1.0
+derby,ilha do retiro,,,1.0
+derby,madalena,,,1.0
+derby,gracas,,,1.0
+dois irmaos,caxanga,,,1.0
+dois irmaos,sitio dos pintos,,,1.0
+dois irmaos,guabiraba,,,1.0
+dois irmaos,corrego do jenipapo,,,1.0
+espinheiro,gracas,,,1.0
+gracas,madalena,,,1.0
+gracas,torre,,,1.0
+gracas,jaqueira,,,1.0
+gracas,tamarineira,,,1.0
+jaqueira,torre,,,1.0
+jaqueira,santana,,,1.0
+jaqueira,parnamirim,,,1.0
+jaqueira,tamarineira,,,1.0
+monteiro,poco,,,1.0
+monteiro,iputinga,,,1.0
+parnamirim,santana,,,1.0
+parnamirim,tamarineira,,,1.0
+poco,santana,,,1.0
+poco,cordeiro,,,1.0
+poco,iputinga,,,1.0
+santana,torre,,,1.0
+santana,cordeiro,,,1.0
+sitio dos pintos,caxanga,,,1.0
+tamarineira,alto jose do pinho,,,1.0
+tamarineira,mangabeira,,,1.0
+alto jose bonifacio,alto jose do pinho,,,1.0
+alto jose bonifacio,morro da conceicao,,,1.0
+alto jose bonifacio,vasco da gama,,,1.0
+alto jose bonifacio,brejo do beberibe,,,1.0
+mangabeira,alto jose do pinho,,,1.0
+alto jose do pinho,morro da conceicao,,,1.0
+morro da conceicao,vasco da gama,,,1.0
+vasco da gama,brejo do beberibe,,,1.0
+vasco da gama,nova descoberta,,,1.0
+brejo da guabiraba,guabiraba,,,1.0
+brejo da guabiraba,passarinho,,,1.0
+brejo da guabiraba,brejo do beberibe,,,1.0
+brejo da guabiraba,nova descoberta,,,1.0
+brejo da guabiraba,corrego do jenipapo,,,1.0
+guabiraba,pau-ferro,,,1.0
+guabiraba,passarinho,,,1.0
+guabiraba,corrego do jenipapo,,,1.0
+macaxeira,nova descoberta,,,1.0
+macaxeira,corrego do jenipapo,,,1.0
+nova descoberta,corrego do jenipapo,,,1.0
+nova descoberta,brejo do beberibe,,,1.0
+passarinho,brejo do beberibe,,,1.0
+cordeiro,san martin,,,1.0
+cordeiro,prado,,,1.0
+cordeiro,zumbi,,,1.0
+cordeiro,torroes,,,1.0
+cordeiro,engenho do meio,,,1.0
+cordeiro,iputinga,,,1.0
+cordeiro,torre,,,1.0
+ilha do retiro,afogados,,,1.0
+iputinga,cidade universitaria,,,1.0
+iputinga,varzea,,,1.0
+iputinga,caxanga,,,1.0
+madalena,ilha do retiro,,,1.0
+madalena,prado,,,1.0
+madalena,zumbi,,,1.0
+madalena,torre,,,1.0
+prado,zumbi,,,1.0
+prado,ilha do retiro,,,1.0
+prado,afogados,,,1.0
+prado,bongi,,,1.0
+prado,san martin,,,1.0
+torre,zumbi,,,1.0
+engenho do meio,torroes,,,1.0
+engenho do meio,curado,,,1.0
+engenho do meio,cidade universitaria,,,1.0
+engenho do meio,iputinga,,,1.0
+torroes,san martin,,,1.0
+torroes,curado,,,1.0
+caxanga,varzea,,,1.0
+cidade universitaria,curado,,,1.0
+varzea,cidade universitaria,,,1.0
+varzea,curado,,,1.0
+afogados,bongi,,,1.0
+afogados,mustardinha,,,1.0
+afogados,mangueira,,,1.0
+afogados,jiquia,,,1.0
+afogados,imbiribeira,,,1.0
+afogados,pina,,,1.0
+bongi,mustardinha,,,1.0
+bongi,san martin,,,1.0
+mangueira,jiquia,,,1.0
+mangueira,san martin,,,1.0
+mangueira,mustardinha,,,1.0
+mustardinha,san martin,,,1.0
+san martin,jiquia,,,1.0
+san martin,estancia,,,1.0
+san martin,curado,,,1.0
+san martin,jardim sao paulo,,,1.0
+areias,estancia,,,1.0
+areias,jiquia,,,1.0
+areias,imbiribeira,,,1.0
+areias,ipsep,,,1.0
+areias,cacote,,,1.0
+areias,ibura,,,1.0
+areias,barro,,,1.0
+areias,jardim sao paulo,,,1.0
+cacote,ipsep,,,1.0
+cacote,ibura,,,1.0
+estancia,jardim sao paulo,,,1.0
+estancia,jiquia,,,1.0
+jiquia,imbiribeira,,,1.0
+barro,jardim sao paulo,,,1.0
+barro,tejipio,,,1.0
+barro,ibura,,,1.0
+barro,cohab,,,1.0
+coqueiral,toto,,,1.0
+coqueiral,tejipio,,,1.0
+coqueiral,sancho,,,1.0
+curado,jardim sao paulo,,,1.0
+curado,sancho,,,1.0
+curado,toto,,,1.0
+curado,tejipio,,,1.0
+jardim sao paulo,tejipio,,,1.0
+sancho,toto,,,1.0
+sancho,tejipio,,,1.0
+boa viagem,jordao,,,1.0
+boa viagem,ibura,,,1.0
+boa viagem,imbiribeira,,,1.0
+boa viagem,pina,,,1.0
+brasilia teimosa,pina,,,1.0
+imbiribeira,pina,,,1.0
+imbiribeira,ipsep,,,1.0
+imbiribeira,ibura,,,1.0
+ipsep,ibura,,,1.0
+ibura,jordao,,,1.0
+ibura,cohab,,,1.0
+jordao,cohab,,,1.0
