@@ -1,0 +1,19 @@
+import pandas as pd
+
+egoBairro = pd.read_csv("out/ego_bairro.csv")
+
+bigger_grau = 0
+
+dados = {
+  "bairro": [],
+  "grau": []
+}
+for _, linha in egoBairro.iterrows():
+    bairro = linha['bairro']
+    grau = linha['grau']
+    
+    dados['bairro'].append(bairro)
+    dados['grau'].append(grau)
+
+df_final = pd.DataFrame(dados)
+df_final.to_csv("out/graus.csv", index=False, encoding="utf-8")
