@@ -1,0 +1,13 @@
+{
+  "origem": "Ilha do Retiro",
+  "destino": "Ibura",
+  "custo": 11.8,
+  "caminho": [
+    "ilha do retiro",
+    "prado",
+    "san martin",
+    "estancia",
+    "areias",
+    "ibura"
+  ]
+}

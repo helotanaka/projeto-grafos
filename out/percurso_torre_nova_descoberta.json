@@ -1,0 +1,12 @@
+{
+  "origem": "Torre",
+  "destino": "Nova Descoberta",
+  "custo": 8.399999999999999,
+  "caminho": [
+    "torre",
+    "santana",
+    "casa forte",
+    "casa amarela",
+    "nova descoberta"
+  ]
+}

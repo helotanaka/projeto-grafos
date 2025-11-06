@@ -1,0 +1,7 @@
+X,Y,bairro_X,bairro_Y,custo,caminho
+"Rua Prof. José dos Anjos, 1150, Recife - PE","Rua São Mateus, 200, Recife - PE",Arruda,Totó,18.0,arruda -> ponto de parada -> encruzilhada -> gracas -> madalena -> prado -> san martin -> curado -> toto
+"Rua Real da Torre, 345, Recife - PE","Rua Nova Descoberta, 780, Recife - PE",Torre,Nova Descoberta,8.399999999999999,torre -> santana -> casa forte -> casa amarela -> nova descoberta
+"Rua do Espinheiro, 505, Recife - PE","Rua Parnamirim, 210, Recife - PE",Espinheiro,Parnamirim,5.1,espinheiro -> encruzilhada -> ponto de parada -> tamarineira -> parnamirim
+"Av. Boa Viagem, 4500, Recife - PE","Rua Alto do Tiro, 320, Recife - PE",Boa Viagem,Linha do Tiro,21.7,boa viagem -> pina -> sao jose -> santo antonio -> recife -> santo amaro -> campo grande -> arruda -> agua fria -> linha do tiro
+"Rua Benfica, 750, Recife - PE","Rua Onze de Agosto, 190, Recife - PE",Ilha do Retiro,Ibura,11.8,ilha do retiro -> prado -> san martin -> estancia -> areias -> ibura
+"Rua Nova Descoberta, 780, Recife - PE","Rua Setúbal, 1300, Recife - PE",Nova Descoberta,Setúbal,23.099999999999998,nova descoberta -> macaxeira -> apipucos -> iputinga -> cordeiro -> san martin -> mangueira -> afogados -> imbiribeira -> boa viagem

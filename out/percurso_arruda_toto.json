@@ -1,0 +1,16 @@
+{
+  "origem": "Arruda",
+  "destino": "Totó",
+  "custo": 18.0,
+  "caminho": [
+    "arruda",
+    "ponto de parada",
+    "encruzilhada",
+    "gracas",
+    "madalena",
+    "prado",
+    "san martin",
+    "curado",
+    "toto"
+  ]
+}

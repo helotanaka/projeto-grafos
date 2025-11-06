@@ -1,0 +1,17 @@
+{
+  "origem": "Boa Viagem",
+  "destino": "Linha do Tiro",
+  "custo": 21.7,
+  "caminho": [
+    "boa viagem",
+    "pina",
+    "sao jose",
+    "santo antonio",
+    "recife",
+    "santo amaro",
+    "campo grande",
+    "arruda",
+    "agua fria",
+    "linha do tiro"
+  ]
+}

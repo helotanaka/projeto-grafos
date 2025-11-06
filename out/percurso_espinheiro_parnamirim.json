@@ -1,0 +1,12 @@
+{
+  "origem": "Espinheiro",
+  "destino": "Parnamirim",
+  "custo": 5.1,
+  "caminho": [
+    "espinheiro",
+    "encruzilhada",
+    "ponto de parada",
+    "tamarineira",
+    "parnamirim"
+  ]
+}
