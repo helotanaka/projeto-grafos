@@ -1,0 +1,14 @@
+{
+  "origem": "Foz do Iguaçu",
+  "destino": "Arroio do Sal",
+  "custo": 365.0,
+  "caminho": [
+    "Foz do Iguaçu",
+    "Missal",
+    "Santa Helena",
+    "Triunfo",
+    "Porto Alegre",
+    "Terra de Areia",
+    "Arroio do Sal"
+  ]
+}

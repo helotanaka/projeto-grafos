@@ -1,0 +1,10 @@
+{
+  "origem": "Pouso Redondo",
+  "destino": "Xanxerê",
+  "custo": 216.0,
+  "caminho": [
+    "Pouso Redondo",
+    "Catanduvas",
+    "Xanxerê"
+  ]
+}

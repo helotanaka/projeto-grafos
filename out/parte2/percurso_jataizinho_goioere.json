@@ -1,0 +1,12 @@
+{
+  "origem": "Jataizinho",
+  "destino": "Goioerê",
+  "custo": 305.0,
+  "caminho": [
+    "Jataizinho",
+    "Assaí",
+    "Londrina",
+    "Maringá",
+    "Goioerê"
+  ]
+}

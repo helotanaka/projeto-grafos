@@ -1,0 +1,6 @@
+origem,destino,custo,caminho
+São Paulo,Maragogi,270.0,São Paulo -> São Vicente -> Currais Novos -> Caicó -> Várzea -> Espírito Santo -> Jundiá -> Porto Calvo -> Maragogi
+Foz do Iguaçu,Arroio do Sal,365.0,Foz do Iguaçu -> Missal -> Santa Helena -> Triunfo -> Porto Alegre -> Terra de Areia -> Arroio do Sal
+Jataizinho,Goioerê,305.0,Jataizinho -> Assaí -> Londrina -> Maringá -> Goioerê
+Recife,Joinville,230.0,Recife -> Campina Grande -> Massaranduba -> Guaramirim -> Joinville
+Pouso Redondo,Xanxerê,216.0,Pouso Redondo -> Catanduvas -> Xanxerê

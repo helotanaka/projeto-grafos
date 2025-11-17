@@ -1,0 +1,12 @@
+{
+  "origem": "Recife",
+  "destino": "Joinville",
+  "custo": 230.0,
+  "caminho": [
+    "Recife",
+    "Campina Grande",
+    "Massaranduba",
+    "Guaramirim",
+    "Joinville"
+  ]
+}

@@ -2,9 +2,10 @@ from collections import defaultdict
 from typing import Dict, List, Tuple
 
 class Graph:
-    def __init__(self):
+    def __init__(self, direcionado: bool = False):
         # usar dict para evita duplicar arestas e facilita manter o menor peso
         self.adj: Dict[str, Dict[str, float]] = defaultdict(dict)
+        self.direcionado = direcionado
 
     def adicionar_no(self, no: str) -> None:
         _ = self.adj[no]  # força criação
@@ -16,11 +17,11 @@ class Graph:
         else:
             self.adj[origem][destino] = peso
 
-        # destino -> origem (espelho)
-        if origem in self.adj[destino]:
-            self.adj[destino][origem] = min(self.adj[destino][origem], peso)
-        else:
-            self.adj[destino][origem] = peso
+        if not self.direcionado:
+            if origem in self.adj[destino]:
+                self.adj[destino][origem] = min(self.adj[destino][origem], peso)
+            else:
+                self.adj[destino][origem] = peso
 
     def vizinhos(self, no: str) -> List[Tuple[str, float]]:
         return list(self.adj[no].items())
@@ -35,8 +36,10 @@ class Graph:
         return len(self.adj)
 
     def tamanho(self) -> int:
-        # cada aresta aparece duas vezes, então divide por 2
-        return sum(len(vs) for vs in self.adj.values()) // 2
+        m = sum(len(vs) for vs in self.adj.values())
+        if self.direcionado:
+            return m
+        return m // 2
 
     def grau(self, no: str) -> int:
         return len(self.adj[no])
@@ -49,8 +52,8 @@ class Graph:
         return False
 
     @classmethod
-    def from_arestas(cls, arestas: List[Tuple[str, str, float]]):
-        g = cls()
+    def from_arestas(cls, arestas: List[Tuple[str, str, float]], direcionado: bool = False):
+        g = cls(direcionado=direcionado)
         for u, v, w in arestas:
             g.adicionar_aresta(u, v, w)
         return g

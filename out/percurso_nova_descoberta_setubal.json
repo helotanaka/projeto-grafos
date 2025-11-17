@@ -1,6 +1,6 @@
 {
   "origem": "Nova Descoberta",
-  "destino": "Boa Viagem (Setúbal)",
+  "destino": "Setúbal",
   "no_obrigatorio": "Boa Viagem (Setúbal)",
   "custo": 23.099999999999998,
   "caminho": [
@@ -13,6 +13,6 @@
     "mangueira",
     "afogados",
     "imbiribeira",
-    "Boa Viagem (Setúbal)"
+    "boa viagem"
   ]
 }

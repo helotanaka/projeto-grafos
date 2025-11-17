@@ -1,0 +1,16 @@
+{
+  "origem": "São Paulo",
+  "destino": "Maragogi",
+  "custo": 270.0,
+  "caminho": [
+    "São Paulo",
+    "São Vicente",
+    "Currais Novos",
+    "Caicó",
+    "Várzea",
+    "Espírito Santo",
+    "Jundiá",
+    "Porto Calvo",
+    "Maragogi"
+  ]
+}
