@@ -7,6 +7,7 @@ from src.graphs.algorithms import (
     NetworkXNoPath,
 )
 
+
 def _slug(s: str) -> str:
     s = unicodedata.normalize("NFKD", str(s))
     s = "".join(c for c in s if not unicodedata.combining(c))
@@ -40,6 +41,15 @@ def calcular_distancias():
                 peso = float(tempo_str)
             except (TypeError, ValueError):
                 continue
+
+            if peso < 0:
+                raise ValueError(
+                    f"Peso negativo encontrado na aresta '{origem}' -> '{destino}': {peso}"
+                )
+            if peso == 0:
+                raise ValueError(
+                    f"Peso igual a 0 encontrado na aresta '{origem}' -> '{destino}': {peso}"
+                )
 
             G.adicionar_aresta(origem, destino, peso)
             G.adicionar_aresta(destino, origem, peso)
