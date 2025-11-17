@@ -1,7 +1,7 @@
 import csv, json, unicodedata, re
 from pathlib import Path
-from .graphs.graph import Graph
-from .graphs.algorithms import (
+from src.graphs.graph import Graph
+from src.graphs.algorithms import (
     dijkstra_path,
     dijkstra_path_length,
     NetworkXNoPath,
