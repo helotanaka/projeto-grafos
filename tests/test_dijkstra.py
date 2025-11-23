@@ -42,14 +42,8 @@ def calcular_distancias():
             except (TypeError, ValueError):
                 continue
 
-            if peso < 0:
-                raise ValueError(
-                    f"Peso negativo encontrado na aresta '{origem}' -> '{destino}': {peso}"
-                )
-            if peso == 0:
-                raise ValueError(
-                    f"Peso igual a 0 encontrado na aresta '{origem}' -> '{destino}': {peso}"
-                )
+            if peso <= 0:
+                continue
 
             G.adicionar_aresta(origem, destino, peso)
             G.adicionar_aresta(destino, origem, peso)

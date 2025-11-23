@@ -1,0 +1,13 @@
+{
+  "origem": "São Carlos",
+  "destino": "Júlio de Castilhos",
+  "custo": -1025.0,
+  "caminho": [
+    "São Carlos",
+    "São José do Rio Preto",
+    "Palmitos",
+    "Boa Vista das Missões",
+    "Condor",
+    "Júlio de Castilhos"
+  ]
+}

@@ -1,0 +1,3 @@
+origem,destino,custo,caminho
+Palmitos,São José do Rio Preto,-190.0,Palmitos -> São Carlos -> São José do Rio Preto
+São Carlos,Júlio de Castilhos,-1025.0,São Carlos -> São José do Rio Preto -> Palmitos -> Boa Vista das Missões -> Condor -> Júlio de Castilhos

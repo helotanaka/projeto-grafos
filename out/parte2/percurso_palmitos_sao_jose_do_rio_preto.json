@@ -1,0 +1,10 @@
+{
+  "origem": "Palmitos",
+  "destino": "São José do Rio Preto",
+  "custo": -190.0,
+  "caminho": [
+    "Palmitos",
+    "São Carlos",
+    "São José do Rio Preto"
+  ]
+}
