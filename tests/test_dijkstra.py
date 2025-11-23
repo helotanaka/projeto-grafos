@@ -1,5 +1,7 @@
 import csv, json, unicodedata, re
 from pathlib import Path
+from time import time 
+import tracemalloc
 from src.graphs.graph import Graph
 from src.graphs.algorithms import (
     dijkstra_path,
@@ -16,6 +18,9 @@ def _slug(s: str) -> str:
 
 
 def calcular_distancias():
+    inicio_total = time()
+    tracemalloc.start()
+
     base = Path(__file__).resolve().parent.parent
     data_dir = base / "data"
     dataset_dir = data_dir / "dataset_parte2"
@@ -97,3 +102,24 @@ def calcular_distancias():
         w = csv.writer(file)
         w.writerow(["origem", "destino", "custo", "caminho"])
         w.writerows(resultados)
+
+#report
+    tempo_total = time() - inicio_total
+
+    memoria_pico = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+
+    report_path = json_dir / "parte2_report.json"
+    try:
+        with open(report_path, "r", encoding="utf-8") as f:
+            report = json.load(f)
+    except FileNotFoundError:
+        report = {}
+
+    report["dijkstra_parte2"] = {
+        "tempo": tempo_total,
+        "memoria": memoria_pico,
+    }
+
+    with open(report_path, "w", encoding="utf-8") as f:
+        json.dump(report, f, ensure_ascii=False, indent=2)
