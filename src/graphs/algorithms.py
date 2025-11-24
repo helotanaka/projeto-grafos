@@ -224,3 +224,77 @@ def bellman_ford_path_length(
         raise NetworkXNoPath(f"Não há caminho de {source} para {target}")
 
     return dist[target]
+
+def bfs_ordem_camadas_ciclos(
+    G: Graph,
+    source: str,
+    max_cycles: int = 10
+):
+
+    if source not in G.nos():
+        raise NodeNotFound(source)
+
+    visited: Set[str] = {source}
+    parent: Dict[str, Optional[str]] = {source: None}
+    dist: Dict[str, int] = {source: 0}
+    ordem: List[str] = []
+    cycles: List[List[str]] = []
+    seen_cycles: Set[Tuple[str, ...]] = set()
+
+    fila = deque([source])
+
+    def path_to_root(node: str) -> List[str]:
+        path: List[str] = []
+        while node is not None:
+            path.append(node)
+            node = parent.get(node)
+        return path
+
+    while fila:
+        v = fila.popleft()
+        ordem.append(v)
+
+        for u, _w in G.vizinhos(v):
+            if u not in visited:
+                # Aresta de árvore (v -> u)
+                visited.add(u)
+                parent[u] = v
+                dist[u] = dist[v] + 1
+                fila.append(u)
+            elif parent[v] != u:
+                if len(cycles) >= max_cycles:
+                    continue  # atingiu o limite de ciclos armazenados
+                pv = path_to_root(v)
+                pu = path_to_root(u)
+                set_pu = set(pu)
+
+                # encontra o menor antecessor em comum
+                lca = next((x for x in pv if x in set_pu), None)
+                if lca is None:
+                    continue
+
+                iv = pv.index(lca)
+                iu = pu.index(lca)
+
+                # Caminho 
+                path_v = pv[: iv + 1]
+                path_u = pu[:iu]  # exclui o lca
+                cycle = path_v + path_u[::-1]
+
+                if len(cycle) < 3:
+                    continue
+
+                key = tuple(cycle)
+                key_rev = tuple(reversed(cycle))
+                if key not in seen_cycles and key_rev not in seen_cycles:
+                    seen_cycles.add(key)
+                    cycles.append(cycle)
+
+    # monta as camadas a partir da distância (níveis) calculada na BFS
+    layers_dict: Dict[int, List[str]] = {}
+    for node, d in dist.items():
+        layers_dict.setdefault(d, []).append(node)
+
+    camadas: List[List[str]] = [layers_dict[d] for d in sorted(layers_dict)]
+
+    return ordem, camadas, cycles

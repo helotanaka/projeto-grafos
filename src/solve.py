@@ -1,7 +1,7 @@
 import csv, json, unicodedata, re
 from pathlib import Path
 from .graphs.graph import Graph
-from .graphs.algorithms import dijkstra_path, dijkstra_path_length
+from .graphs.algorithms import dijkstra_path, dijkstra_path_length,  bfs_ordem_camadas_ciclos
 
 ALIAS_BAIRROS = {
     "setubal": "boa viagem",
@@ -530,3 +530,80 @@ def gerar_grafo_interativo():
         f.write(html)
 
     print(f"Grafo interativo salvo em: {saida}")
+
+def bfs():
+    base = Path(__file__).resolve().parent.parent 
+    data_dir = base /"data"/"dataset_parte2"
+    out_dir = base /"out"/ "parte2"/ "bfs"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    # Monta o grafo a partir de LRH2016_00_Base_Completa.csv
+    G = Graph()
+    with open(data_dir / "LRH2016_00_Base_Completa.csv", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            mun_a = (row.get("nomemun_a") or "").strip()
+            mun_b = (row.get("nomemun_b") or "").strip()
+
+            if not mun_a or not mun_b:
+                continue
+
+            custo_str = (row.get("custo") or "").strip()
+            if not custo_str:
+                continue
+
+            try:
+                custo = float(custo_str)
+            except ValueError:
+                continue
+
+            # grafo não-direcionado
+            G.adicionar_aresta(mun_a, mun_b, custo)
+
+    # Lê enderecos_parte2.csv
+    with open(data_dir / "enderecos_parte2.csv", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+
+        for row in reader:
+            inicio = (row.get("municipio_inicio") or "").strip().strip('"')
+            destino = (row.get("municipio_destino") or "").strip().strip('"')
+
+            if not inicio:
+                continue
+
+            print(f"\n[BFS] Origem: '{inicio}'  Destino (apenas para nome do arquivo): '{destino}'")
+
+            if not G.tem_no(inicio):
+                resultado = {
+                    "fonte": inicio,
+                    "destino": destino,
+                    "erro": f"Município '{inicio}' não existe no grafo construído a partir do dataset.",
+                }
+            else:
+                ordem, camadas, ciclos = bfs_ordem_camadas_ciclos(
+                    G,
+                    inicio,
+                    max_cycles=10,
+                )
+                resultado = {
+                    "fonte": inicio,
+                    "destino": destino,
+                    "ordem": ordem,
+                    "camadas": camadas,
+                    "ciclos": ciclos,
+                }
+
+                print(f"Ordem: {len(ordem)} nós visitados")
+                print(f"Camadas: {len(camadas)} níveis")
+                print(f"Ciclos armazenados: {len(ciclos)}")
+
+            # 3Gera nome de arquivo específico para cada percurso
+            nome_arquivo = f"bfs_{inicio}_{destino}.json"
+            arquivo_saida = out_dir / nome_arquivo
+
+            with open(arquivo_saida, "w", encoding="utf-8") as jf:
+                json.dump(resultado, jf, ensure_ascii=False, indent=2)
+
+            print(f"JSON salvo em: {arquivo_saida}")
+
+
