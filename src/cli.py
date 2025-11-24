@@ -1,5 +1,5 @@
 import argparse
-from .solve import calcular_distancias, gerar_grafo_interativo, bfs
+from .solve import calcular_distancias, gerar_grafo_interativo, bfs, dfs
 
 def main():
     parser = argparse.ArgumentParser()
@@ -9,6 +9,8 @@ def main():
                         help="Gera out/grafo_interativo.html com o grafo dos bairros.")
     parser.add_argument("--bfs", action="store_true",
                         help="Roda BFS no grafo a partir de municipio_inicio de enderecos_parte2.csv.")
+    parser.add_argument("--dfs", action="store_true",
+                        help="Roda DFS no grafo a partir de municipio_inicio de enderecos_parte2.csv.")
 
     args = parser.parse_args()
 
@@ -20,6 +22,9 @@ def main():
 
     if args.bfs:
         bfs()
+    
+    if args.dfs:
+        dfs()
 
 if __name__ == "__main__":
     main()

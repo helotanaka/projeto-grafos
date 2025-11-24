@@ -263,12 +263,12 @@ def bfs_ordem_camadas_ciclos(
                 fila.append(u)
             elif parent[v] != u:
                 if len(cycles) >= max_cycles:
-                    continue  # atingiu o limite de ciclos armazenados
+                    continue  # Atingiu o limite de ciclos armazenados
                 pv = path_to_root(v)
                 pu = path_to_root(u)
                 set_pu = set(pu)
 
-                # encontra o menor antecessor em comum
+                # Encontra o menor antecessor em comum
                 lca = next((x for x in pv if x in set_pu), None)
                 if lca is None:
                     continue
@@ -290,7 +290,7 @@ def bfs_ordem_camadas_ciclos(
                     seen_cycles.add(key)
                     cycles.append(cycle)
 
-    # monta as camadas a partir da distância (níveis) calculada na BFS
+    # Monta as camadas a partir da distância (níveis) calculada na BFS
     layers_dict: Dict[int, List[str]] = {}
     for node, d in dist.items():
         layers_dict.setdefault(d, []).append(node)
@@ -298,3 +298,89 @@ def bfs_ordem_camadas_ciclos(
     camadas: List[List[str]] = [layers_dict[d] for d in sorted(layers_dict)]
 
     return ordem, camadas, cycles
+
+def dfs_ordem_camadas_ciclos(
+    G: Graph,
+    source: str,
+    max_cycles: int = 10,
+):
+    if source not in G.nos():
+        raise NodeNotFound(source)
+
+    visited: Set[str] = set()
+    parent: Dict[str, Optional[str]] = {source: None}
+    depth: Dict[str, int] = {source: 0}
+    ordem: List[str] = []
+    cycles: List[List[str]] = []
+    seen_cycles: Set[Tuple[str, ...]] = set()
+
+    def path_to_root(node: str) -> List[str]:
+        path: List[str] = []
+        while node is not None:
+            path.append(node)
+            node = parent.get(node)
+        return path
+
+    # Pilha no estilo edge_dfs: cada item guarda (no_atual, iterador_de_vizinhos)
+    stack: List[Tuple[str, Any]] = []
+
+    visited.add(source)
+    ordem.append(source)
+    stack.append((source, iter(G.vizinhos(source))))
+
+    while stack:
+        v, neighbors_iter = stack[-1]
+        try:
+            u, _w = next(neighbors_iter)
+        except StopIteration:
+            # Terminamos todos os vizinhos: desempilha
+            stack.pop()
+            continue
+
+        if u not in visited:
+            # Aresta de árvore (v -> u)
+            visited.add(u)
+            parent[u] = v
+            depth[u] = depth[v] + 1
+            ordem.append(u)
+            # Novo frame na pilha para u
+            stack.append((u, iter(G.vizinhos(u))))
+        elif parent[v] != u:
+            # Possível ciclo (aresta não árvore)
+            if len(cycles) >= max_cycles:
+                continue
+
+            pv = path_to_root(v)
+            pu = path_to_root(u)
+            set_pu = set(pu)
+
+            # Encontra o menor antecessor em comum
+            lca = next((x for x in pv if x in set_pu), None)
+            if lca is None:
+                continue
+
+            iv = pv.index(lca)
+            iu = pu.index(lca)
+
+            path_v = pv[: iv + 1]
+            path_u = pu[:iu]  # Exclui o lca
+            cycle = path_v + path_u[::-1]
+
+            if len(cycle) < 3:
+                continue
+
+            key = tuple(cycle)
+            key_rev = tuple(reversed(cycle))
+            if key not in seen_cycles and key_rev not in seen_cycles:
+                seen_cycles.add(key)
+                cycles.append(cycle)
+
+    # Monta as camadas a partir da profundidade
+    layers_dict: Dict[int, List[str]] = {}
+    for node, d in depth.items():
+        layers_dict.setdefault(d, []).append(node)
+
+    camadas: List[List[str]] = [layers_dict[d] for d in sorted(layers_dict)]
+
+    return ordem, camadas, cycles
+
