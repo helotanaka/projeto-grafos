@@ -6,7 +6,7 @@ santo amaro,santo antonio,r. do sol,2.6
 santo amaro,boa vista,r. frei cassimiro,3.3
 santo amaro,soledade,av. cruz cabuga,2.4
 santo amaro,espinheiro,r. tupinambas,2.4
-santo amaro,torreao,avenida norte,1.4
+santo amaro,torreao,av. norte,1.4
 santo amaro,campo grande,r. odorico mendes,2.2
 boa vista,santo antonio,r. visconde de goiana,2.9
 boa vista,coelhos,r. dos coelhos,2.0
@@ -29,7 +29,7 @@ santo antonio,sao jose,r. da concordia,2.2
 santo antonio,coelhos,r. rego melo,1.4
 sao jose,brasilia teimosa,pe 009,4.3
 sao jose,pina,av. eng. jose estelita,4.3
-sao jose,afogados,via av. sul gov. cid sampaio,3.7
+sao jose,afogados,gov. cid sampaio,3.7
 sao jose,ilha joana bezerra,praca frei caneca,3.1
 sao jose,coelhos,ponte viaduto joaquim cardozo,2.4
 coelhos,ilha joana bezerra,r. prefeito jorge martins,2.2
@@ -37,25 +37,25 @@ ilha joana bezerra,afogados,r. cabo eutropio,3.0
 ilha joana bezerra,ilha do retiro,av. sport clube do recife,2.7
 arruda,campo grande,r. prudente de moraes,2.1
 arruda,ponto de parada,av. beberibe,1.0
-arruda,tamarineira,r. sete pecados e estr. velha de agua fria,1.4
+arruda,tamarineira,r. sete pecados,1.4
 arruda,mangabeira,r. da mangabeira,2.7
-arruda,bomba do hemeterio,r. bomba do hemeterio e r. sao bento,1.1
+arruda,bomba do hemeterio,r. bomba do hemeterio,1.1
 arruda,agua fria,r. joao uzeda luna,1.4
 arruda,campina do barreto,r. do machado,1.9
 arruda,peixinhos,r. marcilio dias,2.6
-campina do barreto,agua fria,av. beberibe e r. cel. urbano ribeiro de sena,2.0
-campina do barreto,fundao,r. cel. urbano ribeiro de sena e r. constanca,1.0
+campina do barreto,agua fria,r. cel. urbano ribeiro de sena,2.0
+campina do barreto,fundao,r. constanca,1.0
 campina do barreto,cajueiro,av. sebastiao salazar,1.2
-campina do barreto,peixinhos,r. passarela e r. joao praxedes de oliveira filho,1.0
+campina do barreto,peixinhos,r. passarela,1.0
 campo grande,torreao,r. professor othon paraiso,1.3
 campo grande,encruzilhada,r. nogueira lima,1.4
 campo grande,hipodromo,estr. de belem,1.0
-campo grande,ponto de parada,via r. frederico e estr. de belem,2.3
+campo grande,ponto de parada,via r. frederico,2.3
 campo grande,peixinhos,av. antonio da costa azevedo,2.8
 encruzilhada,torreao,r. antonio rangel,1.7
 encruzilhada,espinheiro,r. conselheiro portela,1.0
-encruzilhada,aflitos,rua conselheiro portela,1.2
-encruzilhada,gracas,rua conselheiro portela e r. joao ramos,1.8
+encruzilhada,aflitos,via r. fernando cesar,1.2
+encruzilhada,gracas,r. joao ramos,1.8
 encruzilhada,rosarinho,r. andre reboucas,1.7
 encruzilhada,ponto de parada,r. dona julieta,1.0
 encruzilhada,hipodromo,r. professor miranda curio,1.0
@@ -68,43 +68,43 @@ rosarinho,tamarineira,r. regueira costa,1.2
 torreao,espinheiro,r. djalma farias,3.1
 agua fria,bomba do hemeterio,r. sao sebastiao,1.3
 agua fria,fundao,r. belo jardim,1.2
-agua fria,porto da madeira,r. sao sebastiao e rua conselheiro barros barreto,1.3
+agua fria,porto da madeira,r. conselheiro barros barreto,1.3
 agua fria,beberibe,r. da cutia,2.4
 agua fria,linha do tiro,r. ladeira de pedra,1.9
-agua fria,alto santa terezinha,r. ladeira de pedra e via r. alto do deodato,3.4
+agua fria,alto santa terezinha,via r. alto do deodato,3.4
 alto santa terezinha,bomba do hemeterio,r. cha de alegria,1.3
 alto santa terezinha,alto jose do pinho,r. alto jose bonifacio,3.1
 alto santa terezinha,morro da conceicao,via r. corrego do euclides,4.5
-alto santa terezinha,alto jose bonifacio,r. alto da serrinha e rua alto do brasil,1.1
-alto santa terezinha,linha do tiro,rua alto do brasil e r. eladio camboim,1.5
-bomba do hemeterio,mangabeira,r. da mangabeira e av. prof. jose dos anjos,2.4
-bomba do hemeterio,alto jose do pinho,r. da mangabeira e r. maria goncalves,1.7
-cajueiro,fundao,av. beberibe e r. ten. vanderlei,1.0
-cajueiro,porto da madeira,av. sebastiao salazar  e av. beberibe,1.3
-fundao,porto da madeira,r.conselheiro barros barreto,1.1
+alto santa terezinha,alto jose bonifacio,r. alto da serrinha,1.1
+alto santa terezinha,linha do tiro,r. alto do brasil,1.5
+bomba do hemeterio,mangabeira,av. prof. jose dos anjos,2.4
+bomba do hemeterio,alto jose do pinho,r. maria goncalves,1.7
+cajueiro,fundao,r. ten. vanderlei,1.0
+cajueiro,porto da madeira,av. gadelha,1.3
+fundao,porto da madeira,r. alto do benjamin,1.1
 porto da madeira,beberibe,r. do anil,1.0
 beberibe,linha do tiro,r. uriel de holanda,1.3
 beberibe,dois unidos,av. leopoldino canuto de melo,3.4
 dois unidos,linha do tiro,r. divisopolis,2.0
 dois unidos,brejo do beberibe,av. ver. otacilio azevedo,1.5
 dois unidos,passarinho,r. arquelau silveira lira,3.1
-linha do tiro,alto jose bonifacio,r uriel de holanda,1.5
-linha do tiro,brejo do beberibe,r. uriel de holanda e av. ver. otacilio azevedo,2.4
+linha do tiro,alto jose bonifacio,r. frei jorge,1.5
+linha do tiro,brejo do beberibe,av. chagas ferreira,2.4
 aflitos,espinheiro,r. samuel campelo,1.1
 aflitos,gracas,av. rui barbosa,2.3
-alto do mandu,casa amarela,rua carolina,1.3
+alto do mandu,casa amarela,r. carolina,1.3
 alto do mandu,monteiro,r. cameta,1.0
 alto do mandu,apipucos,r. cianorte,1.2
 alto do mandu,macaxeira,av. norte miguel arraes de alencar,1.7
-alto do mandu,nova descoberta,r. corrego da areia e av. norte miguel arraes de alencar,3.2
+alto do mandu,nova descoberta,r. corrego da areia,3.2
 apipucos,monteiro,r. de apipucos,1.1
-apipucos,iputinga,r. de apipucos e r. sao mateus,2.9
+apipucos,iputinga,r. sao mateus,2.9
 apipucos,caxanga,r. manuel de medeiros,5.1
 apipucos,dois irmaos,r. dois irmaos,1.5
-apipucos,corrego do jenipapo,r. cel. joao batista do rego barros e av. norte miguel arraes de alencar,2.4
+apipucos,corrego do jenipapo,r. caetes,2.4
 apipucos,macaxeira,r. cel. joao batista do rego barros,1.7
 casa amarela,nova descoberta,r. padre lemos,3.8
-casa amarela,vasco da gama,r. vasco da gama e r. padre lemos,1.5
+casa amarela,vasco da gama,r. aviador rego barros,1.5
 casa amarela,morro da conceicao,estr. do morro da conceicao,1.4
 casa amarela,alto jose do pinho,estr. do arraial,1.6
 casa amarela,mangabeira,r. paula batista,2.2
@@ -112,15 +112,15 @@ casa amarela,tamarineira,av. professor jose dos anjos,3.7
 casa amarela,parnamirim,r. estrela,1.8
 casa amarela,casa forte,estr. das ubaias,1.2
 casa amarela,poco,r. marechal rondon,1.5
-casa amarela,monteiro,estr. do arraial e av. dezessete de agosto,1.7
+casa amarela,monteiro,av. dezessete de agosto,1.7
 casa forte,parnamirim,r. jeronimo de albuquerque,1.5
 casa forte,santana,r. sant'anna,1.0
 casa forte,poco,estr. real do poco,1.0
 derby,ilha do retiro,r. joao elisio ramos,2.0
 derby,madalena,r. arlindo gouveia,1.7
 derby,gracas,r. das pernambucanas,1.4
-dois irmaos,caxanga,r. ribeiro pessoa e r. manuel de medeiros,3.5
-dois irmaos,sitio dos pintos,r. manuel de medeiros e estr. dos eintos,2.0
+dois irmaos,caxanga,r. ribeiro pessoa,3.5
+dois irmaos,sitio dos pintos,estr. dos pintos,2.0
 dois irmaos,guabiraba,rod. governardor mario covas,11.8
 dois irmaos,corrego do jenipapo,av. da recuperacao,2.0
 espinheiro,gracas,r. bruno maia,1.8
@@ -129,7 +129,7 @@ gracas,torre,r. padre anchieta,1.6
 gracas,jaqueira,r. confederacao do equador,2.1
 gracas,tamarineira,r. senador alberto paiva,2.8
 jaqueira,torre,r. jose bonifacio,2.1
-jaqueira,santana,r. afonso de albuquerque melo e r. leonardo bezerra cavalcante,1.6
+jaqueira,santana,r. afonso de albuquerque melo,1.6
 jaqueira,parnamirim,r. do futuro,1.2
 jaqueira,tamarineira,r. canapolis,1.6
 monteiro,poco,r. luiz guimaraes,1.6
@@ -137,37 +137,37 @@ monteiro,iputinga,r. pereira coutinho filho,1.9
 parnamirim,santana,r. leonardo bezerra cavalcante,1.7
 parnamirim,tamarineira,r. conego barata,1.9
 poco,santana,r. alvaro macedo,1.4
-poco,cordeiro, av. mauricio de nassau,4.3
-poco,iputinga,av. dezessete de agosto via e r. pereira coutinho filho,2.8
-santana,torre,r. jose bonifacio e via r. marcos andre,2.4
+poco,cordeiro,av. mauricio de nassau,4.3
+poco,iputinga,r. tapacura,2.8
+santana,torre,via r. marcos andre,2.4
 santana,cordeiro,via r. souza bandeira,5.2
-sitio dos pintos,caxanga,r. ribeiro pessoa e estr. dos pintos,3.7
+sitio dos pintos,caxanga,av. doutor belarmino correia,3.7
 tamarineira,alto jose do pinho,av. prof. jose dos anjos,2.2
-tamarineira,mangabeira,via av. norte miguel arraes de alencar e r. severino bernardino pereira,3.5
-alto jose bonifacio,alto jose do pinho,via rua corrego do bartolomeu e r. alto jose bonifacio,2.0
+tamarineira,mangabeira,r. bella vista,3.5
+alto jose bonifacio,alto jose do pinho,via r. corrego do bartolomeu,2.0
 alto jose bonifacio,morro da conceicao,r corrego do ouro,1.0
-alto jose bonifacio,vasco da gama,r. corrego do ouro e r. alto jose bonifacio,1.8
-alto jose bonifacio,brejo do beberibe,r. alto jose bonifacio e av. ver. otacilio azevedo,2.3
+alto jose bonifacio,vasco da gama,r. da mocidade,1.8
+alto jose bonifacio,brejo do beberibe,r. alto do eucalipto,2.3
 mangabeira,alto jose do pinho,r. severino bernardino pereira,1.0
 alto jose do pinho,morro da conceicao,r. valeriano lobo,1.0
 morro da conceicao,vasco da gama,r. dois de fevereiro,2.0
 vasco da gama,brejo do beberibe,r. vasco da gama,2.1
-vasco da gama,nova descoberta,via r. vasco da gama e r. corrego da areia,2.3
+vasco da gama,nova descoberta,r. alto 13 de maio,2.3
 brejo da guabiraba,guabiraba,pe-016,9.1
 brejo da guabiraba,passarinho,estr. dos passarinhos,4.2
-brejo da guabiraba,brejo do beberibe,via r. pres. costa e silva e av. ver. otacilio azevedo,2.4
+brejo da guabiraba,brejo do beberibe,via r. pres. costa e silva,2.4
 brejo da guabiraba,nova descoberta,r. alto da brasileira,2.8
-brejo da guabiraba,corrego do jenipapo, av. da recuperacao,2.6
+brejo da guabiraba,corrego do jenipapo,r. alto do reservatorio,2.6
 guabiraba,pau-ferro,rod. conselheiro joao campos,17.3
 guabiraba,passarinho,estr. da muribeca,10.9
-guabiraba,corrego do jenipapo,estr. da mumbeca e br-101,10.6
+guabiraba,corrego do jenipapo,estr. da mumbeca,10.6
 macaxeira,nova descoberta,r. maria amalia,1.5
 macaxeira,corrego do jenipapo,av. jose americo de almeida,1.0
 nova descoberta,corrego do jenipapo,r. dos coquinhos,1.6
 nova descoberta,brejo do beberibe,r. corrego da areia,1.0
 passarinho,brejo do beberibe,via estrada do passarinho,4.1
-cordeiro,san martin, r. paes cabral e av. gen. san martin,3.0
-cordeiro,prado,av. caxanga e r. gomes taborda,2.6
+cordeiro,san martin,r. paes cabral,3.0
+cordeiro,prado,r. gomes taborda,2.6
 cordeiro,zumbi,av. caxanga,1.1
 cordeiro,torroes,estr. do forte do arraial novo do bom jesus,2.4
 cordeiro,engenho do meio,r. dr. miguel vieira ferreira,3.1
@@ -176,7 +176,7 @@ cordeiro,torre,r. souza bandeira,3.2
 ilha do retiro,afogados,av. abdias de carvalho,4.8
 iputinga,cidade universitaria,estr. do barbalho,3.3
 iputinga,varzea,r. acdo. helio ramos,4.0
-iputinga,caxanga,av.joaquim ribeiro,5.7
+iputinga,caxanga,av. joaquim ribeiro,5.7
 madalena,ilha do retiro,r. do paissandu,3.0
 madalena,prado,r. real da torre,1.3
 madalena,zumbi,r. jose osorio,2.0
@@ -185,7 +185,7 @@ prado,zumbi,r. fidelis moliterno,1.9
 prado,ilha do retiro,r. pandia calogeras,2.7
 prado,afogados,r. vinte e um de abril,4.4
 prado,bongi,r. santa edwirges,1.7
-prado,san martin,br-232 e av. gen. san martin,2.7
+prado,san martin,av. gen. san martin,2.7
 torre,zumbi,r. marques de marica,2.2
 engenho do meio,torroes,av. bicentenario da revolucao francesa,1.6
 engenho do meio,curado,av. recife,1.6
@@ -209,9 +209,9 @@ mangueira,jiquia,r. marques de sapucaia,2.0
 mangueira,san martin,r. benicio dias,1.2
 mangueira,mustardinha,r. dr. joao elisio,1.1
 mustardinha,san martin,r. neto campelo junior,1.7
-san martin,jiquia,av. recife e av. joao cabral de melo neto,3.7
-san martin,estancia, av. joao cabral de melo neto e av. gen. san martin,1.5
-san martin,curado,av. recife e br-232,2.8
+san martin,jiquia,av. joao cabral de melo neto,3.7
+san martin,estancia,r. humberto de campos,1.5
+san martin,curado,r. primeira travessa bezinha,2.8
 san martin,jardim sao paulo,br-101,3.8
 areias,estancia,r. cap. jacinto da cruz,2.1
 areias,jiquia,r. antonio carneiro,2.2
@@ -221,13 +221,13 @@ areias,cacote,av. capitao gregorio de caldas,1.2
 areias,ibura,av. dom helder camara,2.8
 areias,barro,av. izabel de goes,5.3
 areias,jardim sao paulo,av. sao paulo,3.0
-cacote,ipsep,av. recife e av. cap. gregorio de caldas,2.6
-cacote,ibura,av. recife e av. dom helder camara,2.4
+cacote,ipsep,av. cap. gregorio de caldas,2.6
+cacote,ibura,r. sindicato dos bancarios,2.4
 estancia,jardim sao paulo,r. anibal portela,3.2
 estancia,jiquia,r. rocha pombo,1.7
-jiquia,imbiribeira,r. sao miguel e pe-008,6.7
+jiquia,imbiribeira,r. sao miguel,6.7
 barro,jardim sao paulo,r. leobina pereira,4.3
-barro,tejipio,br-101 e av. conde pereira carneiro,5.3
+barro,tejipio,av. conde pereira carneiro,5.3
 barro,ibura,av. rio sao francisco,3.6
 barro,cohab,av. doze de junho,1.3
 coqueiral,toto,r. alto do paraizo,1.0
@@ -237,10 +237,10 @@ curado,jardim sao paulo,r. lorena,4.2
 curado,sancho,av. liberdade,6.8
 curado,toto,av. getulio vargas,5.3
 curado,tejipio,r. papa joao xxiii,6.7
-jardim sao paulo,tejipio,r. leandro barreto ,3.1
-sancho,toto, av. liberdade,1.2
-sancho,tejipio,r. paulino de farias e r. aprigio guimaraes,1.6
-boa viagem,jordao,r. barao de souza leao e av. maria irene,5.9
+jardim sao paulo,tejipio,r. leandro barreto,3.1
+sancho,toto,r. maria lourdes da silva,1.2
+sancho,tejipio,r. paulino de farias,1.6
+boa viagem,jordao,av. maria irene,5.9
 boa viagem,ibura,r. helio brandao,6.8
 boa viagem,imbiribeira,r. barao de souza leao,4.2
 boa viagem,pina,av. boa viagem,5.3
