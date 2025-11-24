@@ -680,4 +680,4 @@ def dfs():
             with open(arquivo_saida, "w", encoding="utf-8") as jf:
                 json.dump(resultado, jf, ensure_ascii=False, indent=2)
 
-            print(f"   -> JSON salvo em: {arquivo_saida}")
+            print(f"JSON salvo em: {arquivo_saida}")
