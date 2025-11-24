@@ -1,7 +1,7 @@
 import csv, json, unicodedata, re
 from pathlib import Path
 from .graphs.graph import Graph
-from .graphs.algorithms import dijkstra_path, dijkstra_path_length,  bfs_ordem_camadas_ciclos,  dfs_ordem_camadas_ciclos
+from .graphs.algorithms import dijkstra_path, dijkstra_path_length,  bfs_ordem_camadas_ciclos_dir,  dfs_ordem_camadas_ciclos_dir
 
 ALIAS_BAIRROS = {
     "setubal": "boa viagem",
@@ -531,6 +531,8 @@ def gerar_grafo_interativo():
 
     print(f"Grafo interativo salvo em: {saida}")
 
+
+
 def bfs():
     base = Path(__file__).resolve().parent.parent 
     data_dir = base /"data"/"dataset_parte2"
@@ -557,7 +559,6 @@ def bfs():
             except ValueError:
                 continue
 
-            # grafo não-direcionado
             G.adicionar_aresta(mun_a, mun_b, custo)
 
     # Lê enderecos_parte2.csv
@@ -580,7 +581,7 @@ def bfs():
                     "erro": f"Município '{inicio}' não existe no grafo construído a partir do dataset.",
                 }
             else:
-                ordem, camadas, ciclos = bfs_ordem_camadas_ciclos(
+                ordem, camadas, ciclos = bfs_ordem_camadas_ciclos_dir(
                     G,
                     inicio,
                     max_cycles=10,
@@ -655,7 +656,7 @@ def dfs():
                     "erro": f"Município '{inicio}' não existe no grafo construído a partir do dataset.",
                 }
             else:
-                ordem, camadas, ciclos = dfs_ordem_camadas_ciclos(
+                ordem, camadas, ciclos = dfs_ordem_camadas_ciclos_dir(
                     G,
                     inicio,
                     max_cycles=10,

@@ -1,5 +1,5 @@
 from heapq import heappush, heappop
-from typing import Callable, Dict, List, Tuple, Set, Optional
+from typing import Callable, Dict, List, Tuple, Set, Optional, Any
 from collections import deque
 from .graph import Graph
 
@@ -225,12 +225,14 @@ def bellman_ford_path_length(
 
     return dist[target]
 
-def bfs_ordem_camadas_ciclos(
+
+
+
+def bfs_ordem_camadas_ciclos_dir(
     G: Graph,
     source: str,
-    max_cycles: int = 10
+    max_cycles: int = 10,
 ):
-
     if source not in G.nos():
         raise NodeNotFound(source)
 
@@ -254,21 +256,26 @@ def bfs_ordem_camadas_ciclos(
         v = fila.popleft()
         ordem.append(v)
 
+        # Grafo direcionado: segue arestas v -> u
         for u, _w in G.vizinhos(v):
             if u not in visited:
-                # Aresta de árvore (v -> u)
+                # Aresta de árvore
                 visited.add(u)
                 parent[u] = v
                 dist[u] = dist[v] + 1
                 fila.append(u)
+
+            # Aresta não-árvore: pode indicar ciclo direcionado
             elif parent[v] != u:
                 if len(cycles) >= max_cycles:
-                    continue  # Atingiu o limite de ciclos armazenados
+                    # Atingiu limite de ciclos
+                    continue
+
                 pv = path_to_root(v)
                 pu = path_to_root(u)
                 set_pu = set(pu)
 
-                # Encontra o menor antecessor em comum
+                # Encontra o menor ancestral comum
                 lca = next((x for x in pv if x in set_pu), None)
                 if lca is None:
                     continue
@@ -276,11 +283,11 @@ def bfs_ordem_camadas_ciclos(
                 iv = pv.index(lca)
                 iu = pu.index(lca)
 
-                # Caminho 
-                path_v = pv[: iv + 1]
-                path_u = pu[:iu]  # exclui o lca
+                path_v = pv[: iv + 1]  # de v até LCA
+                path_u = pu[:iu]       # de u até antes do LCA
                 cycle = path_v + path_u[::-1]
 
+                # Ciclos de pelo menos 3 nós
                 if len(cycle) < 3:
                     continue
 
@@ -290,7 +297,7 @@ def bfs_ordem_camadas_ciclos(
                     seen_cycles.add(key)
                     cycles.append(cycle)
 
-    # Monta as camadas a partir da distância (níveis) calculada na BFS
+    # Monta camadas a partir das distâncias
     layers_dict: Dict[int, List[str]] = {}
     for node, d in dist.items():
         layers_dict.setdefault(d, []).append(node)
@@ -299,7 +306,8 @@ def bfs_ordem_camadas_ciclos(
 
     return ordem, camadas, cycles
 
-def dfs_ordem_camadas_ciclos(
+
+def dfs_ordem_camadas_ciclos_dir(
     G: Graph,
     source: str,
     max_cycles: int = 10,
@@ -321,7 +329,7 @@ def dfs_ordem_camadas_ciclos(
             node = parent.get(node)
         return path
 
-    # Pilha no estilo edge_dfs: cada item guarda (no_atual, iterador_de_vizinhos)
+    # Pilha: (nó atual, iterador de vizinhos)
     stack: List[Tuple[str, Any]] = []
 
     visited.add(source)
@@ -333,7 +341,7 @@ def dfs_ordem_camadas_ciclos(
         try:
             u, _w = next(neighbors_iter)
         except StopIteration:
-            # Terminamos todos os vizinhos: desempilha
+            # Terminou vizinhos de v, desempilha
             stack.pop()
             continue
 
@@ -343,18 +351,17 @@ def dfs_ordem_camadas_ciclos(
             parent[u] = v
             depth[u] = depth[v] + 1
             ordem.append(u)
-            # Novo frame na pilha para u
             stack.append((u, iter(G.vizinhos(u))))
         elif parent[v] != u:
-            # Possível ciclo (aresta não árvore)
+            # Aresta não-árvore: possível ciclo
             if len(cycles) >= max_cycles:
-                continue
+                return _montar_camadas_dfs(ordem, depth, cycles)
 
             pv = path_to_root(v)
             pu = path_to_root(u)
             set_pu = set(pu)
 
-            # Encontra o menor antecessor em comum
+            # Encontra o menor ancestral comum
             lca = next((x for x in pv if x in set_pu), None)
             if lca is None:
                 continue
@@ -363,7 +370,7 @@ def dfs_ordem_camadas_ciclos(
             iu = pu.index(lca)
 
             path_v = pv[: iv + 1]
-            path_u = pu[:iu]  # Exclui o lca
+            path_u = pu[:iu]  # Exclui lca
             cycle = path_v + path_u[::-1]
 
             if len(cycle) < 3:
@@ -375,12 +382,19 @@ def dfs_ordem_camadas_ciclos(
                 seen_cycles.add(key)
                 cycles.append(cycle)
 
+    camadas = _montar_camadas_dfs(ordem, depth, cycles)[1]
+    return ordem, camadas, cycles
+
+
+def _montar_camadas_dfs(
+    ordem: List[str],
+    depth: Dict[str, int],
+    cycles: List[List[str]],
+):
     # Monta as camadas a partir da profundidade
     layers_dict: Dict[int, List[str]] = {}
     for node, d in depth.items():
         layers_dict.setdefault(d, []).append(node)
-
+        
     camadas: List[List[str]] = [layers_dict[d] for d in sorted(layers_dict)]
-
     return ordem, camadas, cycles
-
