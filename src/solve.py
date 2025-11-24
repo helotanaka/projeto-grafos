@@ -116,7 +116,7 @@ def calcular_distancias():
 
 def gerar_grafo_interativo():
 
-    from pyvis.network import Network  # import local pra não quebrar quem não usa o interativo
+    from pyvis.network import Network
     import json as _json
 
     base = Path(__file__).resolve().parent.parent   # raiz do projeto
@@ -124,9 +124,9 @@ def gerar_grafo_interativo():
     out_dir = base / "out"
     out_dir.mkdir(exist_ok=True)
 
-    # ---------- 1) Monta o grafo a partir de adjacencias_bairros.csv ----------
     G = Graph()
-    label_map = {}  # nome_normalizado -> nome_original (com acento/capitalização)
+    label_map = {}  # nome normalizado -> nome original
+    adj = {}
 
     with open(data_dir / "adjacencias_bairros.csv", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -144,8 +144,11 @@ def gerar_grafo_interativo():
             label_map.setdefault(u, u_raw)
             label_map.setdefault(v, v_raw)
 
-    # ---------- 2) Mapeia bairro -> microrregiao usando bairros_recife.csv ----------
-    microrregioes = {}  # nome_normalizado -> microrregiao (ex.: "1.1")
+            # adjacência (grafo não-direcionado)
+            adj.setdefault(u, []).append((v, w))
+            adj.setdefault(v, []).append((u, w))
+
+    microrregioes = {}  # nome_normalizado -> microrregiao
     try:
         with open(data_dir / "bairros_recife.csv", encoding="utf-8") as f:
             reader = csv.DictReader(f)
@@ -159,16 +162,9 @@ def gerar_grafo_interativo():
                     # se aparecer mais de uma vez, mantém a primeira microrregião
                     microrregioes.setdefault(b_norm, col)
     except FileNotFoundError:
-        # se não achar o CSV, segue sem microrregião (fica "?")
         pass
 
-    # ---------- 3) Calcula grau e densidade da ego-subrede ----------
     def _densidade_ego(no: str) -> float:
-        """
-        Ego-subrede: nó + vizinhos.
-        Densidade = arestas_entre_vizinhos / max_arestas_possiveis_entre_vizinhos
-        (grafo não-direcionado)
-        """
         vizinhos = [v for v, _w in G.vizinhos(no)]
         k = len(vizinhos)
         if k <= 1:
@@ -201,33 +197,39 @@ def gerar_grafo_interativo():
             "label": label,
         }
 
-    # ---------- 4) Carrega percurso Nova Descoberta -> Setúbal ----------
+    default_node_color = "#97C2FC"
+    default_edge_color = "#848484"
+
+    mic_set = sorted({info["microrregiao"] for info in stats.values()})
+    palette = [
+        "#e41a1c", "#377eb8", "#4daf4a", "#984ea3",
+        "#ff7f00", "#ffff33", "#a65628", "#f781bf", "#999999",
+    ]
+    mic_colors = {}
+    for idx, mic in enumerate(mic_set):
+        if mic == "?":
+            #deixa a cor padrão pros que não têm microrregião
+            mic_colors[mic] = default_node_color
+        else:
+            mic_colors[mic] = palette[idx % len(palette)]
+
+    original_node_colors = {
+        u: mic_colors.get(info["microrregiao"], default_node_color)
+        for u, info in stats.items()
+    }
+
     caminho_nodes = []
     try:
         with open(out_dir / "percurso_nova_descoberta_setubal.json", encoding="utf-8") as jf:
-            dados_percurso = json.load(jf)
-            # caminho no JSON já vem em lower/sem acento (foi salvo a partir do grafo)
+            dados_percurso = _json.load(jf)
             caminho_nodes = [_normalize(b) for b in dados_percurso.get("caminho", [])]
     except FileNotFoundError:
-        # se não existir, segue sem destaque de caminho
         caminho_nodes = []
-
-    # constrói lista de IDs de arestas do percurso (vamos usar na legenda/botão)
-    path_edge_ids = []
-    for i in range(len(caminho_nodes) - 1):
-        u = caminho_nodes[i]
-        v = caminho_nodes[i + 1]
-        a, b = sorted([u, v])
-        path_edge_ids.append(f"{a}__{b}")
-
-    # ---------- 5) Monta o grafo interativo com pyvis ----------
-    default_node_color = "#97C2FC"
-    default_edge_color = "#848484"
 
     net = Network(height="750px", width="100%", notebook=False, directed=False)
     net.barnes_hut()
 
-    # adiciona nós com tooltip
+    # adiciona nós com tooltip e cor por microrregião
     for u, info in stats.items():
         tooltip = (
             f"<b>{info['label']}</b><br>"
@@ -236,14 +238,13 @@ def gerar_grafo_interativo():
             f"Densidade ego: {info['densidade_ego']:.3f}"
         )
         net.add_node(
-            u,  # id = nome normalizado
-            label=info["label"],  # nome bonito
+            u,
+            label=info["label"],
             title=tooltip,
-            value=info["grau"],   # controla o tamanho do nó
-            color=default_node_color,
+            value=info["grau"],
+            color=original_node_colors.get(u, default_node_color),
         )
 
-    # adiciona arestas (sem duplicar, já que o grafo é não-direcionado)
     edges_seen = set()
     for u in G.nos():
         for v, w in G.vizinhos(u):
@@ -282,15 +283,33 @@ def gerar_grafo_interativo():
     }
         """)
 
-
     html = net.generate_html(notebook=False)
 
-    # ---------- 6) Injeta caixa de busca + checkbox de destaque do percurso ----------
-    controles_html = """
+    bairros_lista = sorted(
+        [(info["label"], u) for u, info in stats.items()],
+        key=lambda x: x[0].lower()
+    )
+    options_html = "\n".join(
+        f'<option value="{u}">{label}</option>' for label, u in bairros_lista
+    )
+
+    controles_html = f"""
     <div style="margin: 10px 0; font-family: Arial, sans-serif;">
       <input id="searchBox" type="text" placeholder="Buscar bairro..."
              style="padding:4px; width:220px; margin-right:8px;" />
       <button onclick="searchNode()" style="padding:4px 10px;">Buscar</button>
+      <br style="margin-top:8px;" />
+      <label style="font-size:14px; margin-right:4px;">Entrada:</label>
+      <select id="origemSelect" style="padding:4px; min-width:180px;">
+        <option value="">-- selecione --</option>
+        {options_html}
+      </select>
+      <label style="font-size:14px; margin:0 4px 0 12px;">Saída:</label>
+      <select id="destinoSelect" style="padding:4px; min-width:180px;">
+        <option value="">-- selecione --</option>
+        {options_html}
+      </select>
+      <button onclick="filtrarEntradaSaida()" style="padding:4px 10px; margin-left:8px;">Filtrar caminho</button>
       <label style="margin-left:20px; font-size:14px;">
         <input type="checkbox" id="togglePath" onchange="togglePathHighlight()" />
         Destacar percurso Nova Descoberta → Boa Viagem (Setúbal)
@@ -299,89 +318,202 @@ def gerar_grafo_interativo():
     """
 
     path_nodes_js = _json.dumps(caminho_nodes)
-    path_edges_js = _json.dumps(path_edge_ids)
+    adj_js = _json.dumps(adj)
+    orig_colors_js = _json.dumps(original_node_colors)
 
-    extra_script = f"""
+    extra_script_template = """
     <script type="text/javascript">
-      var pathNodeIds = {path_nodes_js};
-      var pathEdgeIds = {path_edges_js};
-      var defaultNodeColor = "{default_node_color}";
-      var defaultEdgeColor = "{default_edge_color}";
-      var pathHighlighted = false;
+      var defaultPathNodes = __PATH_NODES__;
+      var defaultEdgeColor = "__EDGE_COLOR__";
+      var originalNodeColors = __ORIG_COLORS__;
+      var graphAdj = __ADJ__;
 
-      function searchNode() {{
+      function searchNode() {
         var q = document.getElementById('searchBox').value.toLowerCase().trim();
         if (!q) return;
 
         var allNodes = nodes.get();
         var target = null;
 
-        for (var i = 0; i < allNodes.length; i++) {{
+        for (var i = 0; i < allNodes.length; i++) {
           var label = String(allNodes[i].label || allNodes[i].id).toLowerCase();
-          if (label.indexOf(q) !== -1) {{
+          if (label.indexOf(q) !== -1) {
             target = allNodes[i];
             break;
-          }}
-        }}
+          }
+        }
 
-        if (target) {{
-          network.focus(target.id, {{
+        if (target) {
+          network.focus(target.id, {
             scale: 1.5,
-            animation: {{
+            animation: {
               duration: 800,
               easing: 'easeInOutQuad'
-            }}
-          }});
+            }
+          });
           network.selectNodes([target.id]);
-        }} else {{
+        } else {
           alert("Nenhum bairro encontrado para: " + q);
-        }}
-      }}
+        }
+      }
 
-      function togglePathHighlight() {{
-        pathHighlighted = !pathHighlighted;
+      function highlightPath(pathNodes) {
+        // reseta cores originais
+        var nodeUpdates = [];
+        for (var id in originalNodeColors) {
+          nodeUpdates.push({id: id, color: {background: originalNodeColors[id]}});
+        }
+        nodes.update(nodeUpdates);
 
-        if (!pathNodeIds || pathNodeIds.length === 0) {{
-          console.log("Nenhum percurso carregado.");
+        var allEdges = edges.get();
+        var edgeUpdates = [];
+        for (var i = 0; i < allEdges.length; i++) {
+          edgeUpdates.push({
+            id: allEdges[i].id,
+            color: {color: defaultEdgeColor},
+            width: 1
+          });
+        }
+        edges.update(edgeUpdates);
+
+        if (!pathNodes || pathNodes.length === 0) {
           return;
-        }}
+        }
 
-        if (pathHighlighted) {{
-          var nodeUpdates = [];
-          for (var i = 0; i < pathNodeIds.length; i++) {{
-            nodeUpdates.push({{id: pathNodeIds[i], color: {{background: '#ff9900'}} }});
-          }}
-          nodes.update(nodeUpdates);
+        // destaca nós do caminho
+        var pathNodeUpdates = [];
+        for (var j = 0; j < pathNodes.length; j++) {
+          pathNodeUpdates.push({
+            id: pathNodes[j],
+            color: {background: '#ff9900'}
+          });
+        }
+        nodes.update(pathNodeUpdates);
 
-          var edgeUpdates = [];
-          for (var j = 0; j < pathEdgeIds.length; j++) {{
-            edgeUpdates.push({{
-              id: pathEdgeIds[j],
-              color: {{color: '#ff0000'}},
-              width: 4
-            }});
-          }}
-          edges.update(edgeUpdates);
-        }} else {{
-          var nodeUpdates = [];
-          for (var i = 0; i < pathNodeIds.length; i++) {{
-            nodeUpdates.push({{id: pathNodeIds[i], color: {{background: defaultNodeColor}} }});
-          }}
-          nodes.update(nodeUpdates);
+        // destaca arestas do caminho
+        var pathEdgeUpdates = [];
+        for (var k = 0; k < pathNodes.length - 1; k++) {
+          var a = pathNodes[k];
+          var b = pathNodes[k + 1];
+          var pair = [a, b].sort();
+          var eid = pair[0] + "__" + pair[1];
+          pathEdgeUpdates.push({
+            id: eid,
+            color: {color: '#ff0000'},
+            width: 4
+          });
+        }
+        edges.update(pathEdgeUpdates);
+      }
 
-          var edgeUpdates = [];
-          for (var j = 0; j < pathEdgeIds.length; j++) {{
-            edgeUpdates.push({{
-              id: pathEdgeIds[j],
-              color: {{color: defaultEdgeColor}},
-              width: 1
-            }});
-          }}
-          edges.update(edgeUpdates);
-        }}
-      }}
+      function togglePathHighlight() {
+        var cb = document.getElementById('togglePath');
+        if (!cb) return;
+        if (cb.checked) {
+          if (!defaultPathNodes || defaultPathNodes.length === 0) {
+            alert("Percurso Nova Descoberta → Setúbal não encontrado.");
+            cb.checked = false;
+            return;
+          }
+          highlightPath(defaultPathNodes);
+          network.fit({
+            nodes: defaultPathNodes,
+            animation: {
+              duration: 800,
+              easing: 'easeInOutQuad'
+            }
+          });
+        } else {
+          highlightPath([]);
+        }
+      }
+
+      function shortestPath(origem, destino) {
+        if (!graphAdj[origem] || !graphAdj[destino]) {
+          return [];
+        }
+        var dist = {};
+        var prev = {};
+        var visited = {};
+        var nodesList = Object.keys(graphAdj);
+        for (var i = 0; i < nodesList.length; i++) {
+          var n = nodesList[i];
+          dist[n] = Infinity;
+          prev[n] = null;
+          visited[n] = false;
+        }
+        dist[origem] = 0;
+
+        for (var count = 0; count < nodesList.length; count++) {
+          var u = null;
+          var best = Infinity;
+          for (var i = 0; i < nodesList.length; i++) {
+            var n = nodesList[i];
+            if (!visited[n] && dist[n] < best) {
+              best = dist[n];
+              u = n;
+            }
+          }
+          if (u === null) break;
+          if (u === destino) break;
+          visited[u] = true;
+
+          var neigh = graphAdj[u] || [];
+          for (var j = 0; j < neigh.length; j++) {
+            var v = neigh[j][0];
+            var w = neigh[j][1];
+            var alt = dist[u] + w;
+            if (alt < dist[v]) {
+              dist[v] = alt;
+              prev[v] = u;
+            }
+          }
+        }
+
+        var path = [];
+        var curr = destino;
+        if (curr !== origem && prev[curr] == null) {
+          return [];
+        }
+        while (curr != null) {
+          path.unshift(curr);
+          if (curr === origem) break;
+          curr = prev[curr];
+        }
+        return path;
+      }
+
+      function filtrarEntradaSaida() {
+        var origem = document.getElementById('origemSelect').value;
+        var destino = document.getElementById('destinoSelect').value;
+        if (!origem || !destino) {
+          alert("Selecione um bairro de entrada e um de saída.");
+          return;
+        }
+        var path = shortestPath(origem, destino);
+        if (!path || path.length === 0) {
+          alert("Não foi encontrado caminho entre os bairros selecionados.");
+          return;
+        }
+        highlightPath(path);
+        network.fit({
+          nodes: path,
+          animation: {
+            duration: 800,
+            easing: 'easeInOutQuad'
+          }
+        });
+      }
     </script>
     """
+
+    extra_script = (
+        extra_script_template
+        .replace("__PATH_NODES__", path_nodes_js)
+        .replace("__EDGE_COLOR__", default_edge_color)
+        .replace("__ORIG_COLORS__", orig_colors_js)
+        .replace("__ADJ__", adj_js)
+    )
 
     if "<body>" in html:
         html = html.replace("<body>", "<body>\n" + controles_html, 1)
