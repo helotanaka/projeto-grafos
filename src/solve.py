@@ -232,9 +232,9 @@ def gerar_grafo_interativo():
     # adiciona nós com tooltip e cor por microrregião
     for u, info in stats.items():
         tooltip = (
-            f"<b>{info['label']}</b><br>"
-            f"Microrregião: {info['microrregiao']}<br>"
-            f"Grau: {info['grau']}<br>"
+            f"Bairro: {info['label']}; "
+            f"Microrregião: {info['microrregiao']}; "
+            f"Grau: {info['grau']}; "
             f"Densidade ego: {info['densidade_ego']:.3f}"
         )
         net.add_node(
