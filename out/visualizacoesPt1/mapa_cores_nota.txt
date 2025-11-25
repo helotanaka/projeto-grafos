@@ -1,0 +1,1 @@
+Visualização dos bairros coloridos conforme o número de conexões (grau). Quanto mais conexões, mais intensa a cor — revelando os principais hubs urbanos.

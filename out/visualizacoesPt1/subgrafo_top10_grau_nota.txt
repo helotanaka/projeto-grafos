@@ -1,0 +1,1 @@
+Subgrafo contendo os 10 bairros mais conectados. Representa o núcleo da conectividade urbana do Recife.

@@ -1,0 +1,1 @@
+O histograma mostra a distribuição dos graus. Uma cauda longa indica poucos bairros com muitas conexões (superconectores).
