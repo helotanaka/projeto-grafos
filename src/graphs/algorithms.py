@@ -3,16 +3,38 @@ from typing import Callable, Dict, List, Tuple, Set, Optional, Any
 from collections import deque
 from .graph import Graph
 
+
 class NodeNotFound(KeyError):
-    ...
-class NetworkXNoPath(Exception):
-    ...
-class NetworkXNegativeCycle(Exception):
-    def __init__(self, message: str, path: Optional[List[str]] = None, cost: Optional[float] = None):
+# Quando um nó não existe no grafo
+    def __init__(self, node: str):
+        self.node = node
+        super().__init__(f"Nó não encontrado no grafo: {node}")
+
+
+class NoPath(Exception):
+# Quando não existe caminho entre source e target.
+    def __init__(
+        self,
+        message: str,
+        source: str | None = None,
+        target: str | None = None,
+    ):
+        super().__init__(message)
+        self.source = source
+        self.target = target
+
+
+class NegativeCycle(Exception):
+#Quando um ciclo negativo é detectado.
+    def __init__(
+        self,
+        message: str,
+        path: Optional[List[str]] = None,
+        cost: Optional[float] = None,
+    ):
         super().__init__(message)
         self.path = path
         self.cost = cost
-    ...
 
 def _weight_function(weight: str | Callable):
     if callable(weight):
@@ -64,7 +86,7 @@ def dijkstra_path(G: Graph, source: str, target: str, weight: str | Callable = "
     weight_fn = _weight_function(weight)
     dist, pred = _dijkstra_multisource(G, [source], weight_fn, target)
     if target not in dist:
-        raise NetworkXNoPath(f"No path from {source} to {target}")
+        raise NoPath(f"No path from {source} to {target}")
     path = [target]
     while pred[path[-1]]:
         path.append(pred[path[-1]][0])
@@ -78,7 +100,7 @@ def dijkstra_path_length(G: Graph, source: str, target: str, weight: str | Calla
         raise NodeNotFound(target)
     dist, _ = _dijkstra_multisource(G, [source], _weight_function(weight), target)
     if target not in dist:
-        raise NetworkXNoPath(f"No path from {source} to {target}")
+        raise NoPath(f"No path from {source} to {target}")
     return dist[target]
 
 def bellman_ford(
@@ -146,7 +168,7 @@ def bellman_ford(
 
                         path.reverse()
 
-                        raise NetworkXNegativeCycle(
+                        raise NegativeCycle(
                             f"Ciclo negativo detectado (nó '{v}' relaxado {count[v]} vezes)",
                             path=path if target in dist else [],
                             cost=dist.get(target),
@@ -168,7 +190,7 @@ def bellman_ford(
                 current = pred.get(current)
             path.reverse()
 
-        raise NetworkXNegativeCycle(
+        raise NegativeCycle(
             f"Limite de iterações atingido ({max_iterations}) - possível ciclo negativo",
             path=path,
             cost=dist.get(target),
@@ -190,7 +212,7 @@ def bellman_ford_path(
     dist, pred = bellman_ford(G, source, target, weight)
 
     if target not in dist:
-        raise NetworkXNoPath(f"Não há caminho de {source} para {target}")
+        raise NoPath(f"Não há caminho de {source} para {target}")
 
     path = []
     current = target
@@ -221,7 +243,7 @@ def bellman_ford_path_length(
     dist, pred = bellman_ford(G, source, target, weight)
 
     if target not in dist:
-        raise NetworkXNoPath(f"Não há caminho de {source} para {target}")
+        raise NoPath(f"Não há caminho de {source} para {target}")
 
     return dist[target]
 
