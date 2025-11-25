@@ -1,7 +1,19 @@
-# Bairros-do-Recife
+# Projeto da Disciplina de Grafos - CESAR School 2025.2
 
-instalar os requirements utilizando 
-pip install -r requirements.txt
+ Instalar os requirements utilizando: *pip install -r requirements.txt*
 
-pra rodar o dijiktra pt1 cli: python -B -m src.cli --calc-enderecos
-pra rodar os testes pt2 : python -B -m tests.cli_parte2 --calc-enderecos-parte2
+## Primeira parte: Grafo dos Bairros do Recife
+1) Processar e normalizar bairros: *python -m src.graphs.io*
+3) Calcular métricas globais, microrregiões e ego: *python -m src.global_metrics_calculator*
+4) Gerar análises específicas:
+    *python -m src.get_bairro-grau*
+    *python -m src.get_bairro_maior_grau*
+    *python -m src.get_bairro_mais_denso*
+5) Executar Dijkstra para todos os endereços: *python -m src.cli --calc-enderecos*
+6) Gerar a árvore do percurso obrigatório: *python -m src.gerar_arvore_percurso*
+7) Gerar grafo interativo em HTML: *python -m src.cli --grafo-interativo*
+
+## Segunda parte: Ligações Rodoviárias e Hidroviárias (IBGE 2016)
+1) Executar testes de Dijkstra + Bellman–Ford: *python -B -m tests.cli_parte2 --calc-enderecos-parte2*
+2) Rodar BFS direcionado: *python -m src.cli --bfs*
+3) Rodar DFS direcionado: *python -m src.cli --dfs*
