@@ -1,4 +1,4 @@
-Disciplina de Grafos - CESAR School 2025.2
+# Disciplina de Grafos - CESAR School 2025.2
 
 Instalar os requirements utilizando: 
 ```bash
