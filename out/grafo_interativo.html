@@ -51,7 +51,7 @@
 
     <body>
 
-    <div style="margin: 10px 0; font-family: Arial, sans-serif;">
+    <div style="margin: 10px 0; font-family: Arial, sans-serif; float: left; width: 60%;">
       <input id="searchBox" type="text" placeholder="Buscar bairro..."
              style="padding:4px; width:220px; margin-right:8px;" />
       <button onclick="searchNode()" style="padding:4px 10px;">Buscar</button>
@@ -258,6 +258,17 @@
         Destacar percurso Nova Descoberta → Boa Viagem (Setúbal)
       </label>
     </div>
+
+    <!-- Botões alinhados à direita -->
+    <div style="float: right; width: 30%; margin-top: 20px;">
+        <button onclick="window.open('visualizacoesPt1/histograma_graus.png', '_blank')" style="padding: 4px 10px; margin-bottom: 10px; width: 100%;">Histograma de Graus</button>
+        <br>
+        <button onclick="window.open('visualizacoesPt1/mapa_cores.html', '_blank')" style="padding: 4px 10px; margin-bottom: 10px; width: 100%;">Mapa de Cores</button>
+        <br>
+        <button onclick="window.open('visualizacoesPt1/subgrafo_top10_grau.html', '_blank')" style="padding: 4px 10px; margin-bottom: 10px; width: 100%;">Top 10 Subgrafos</button>
+        <br>
+        <button onclick="window.open('visualizacoespt2/distribuicao_graus.png', '_blank')" style="padding: 4px 10px; width: 100%;">Distribuição de Graus (parte 2)</button>
+    </div>
     
         <div class="card" style="width: 100%">
             
@@ -369,7 +380,6 @@
       }
 
       function highlightPath(pathNodes) {
-        // reseta cores originais
         var nodeUpdates = [];
         for (var id in originalNodeColors) {
           nodeUpdates.push({id: id, color: {background: originalNodeColors[id]}});
@@ -391,7 +401,6 @@
           return;
         }
 
-        // destaca nós do caminho
         var pathNodeUpdates = [];
         for (var j = 0; j < pathNodes.length; j++) {
           pathNodeUpdates.push({
@@ -401,7 +410,6 @@
         }
         nodes.update(pathNodeUpdates);
 
-        // destaca arestas do caminho
         var pathEdgeUpdates = [];
         for (var k = 0; k < pathNodes.length - 1; k++) {
           var a = pathNodes[k];

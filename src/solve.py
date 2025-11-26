@@ -152,18 +152,14 @@ def gerar_grafo_interativo():
                     if not bairro_bruto:
                         continue
                     b_norm = _normalize(bairro_bruto)
-                    # se aparecer mais de uma vez, mantém a primeira microrregião
                     microrregioes.setdefault(b_norm, col)
     except FileNotFoundError:
         pass
 
     def _densidade_ego(no: str) -> float:
-
         vizinhos = [v for v, _w in G.vizinhos(no)]
         vizinhos.append(no)
-
         num_nos_ego = len(vizinhos)
-
         if num_nos_ego < 2:
             return 0.0
 
@@ -174,12 +170,10 @@ def gerar_grafo_interativo():
                 if v in G.adj.get(u, {}):
                     arestas += 1
 
-        # Calcula a densidade com a fórmula que ta no pdf da laura
         densidade = (2 * arestas) / (num_nos_ego * (num_nos_ego - 1))
-
         return densidade
 
-    stats = {}  # nome_normalizado -> dict com grau, microrregiao, densidade_ego, label
+    stats = {}
     for u in G.nos():
         grau = G.grau(u)
         dens = _densidade_ego(u)
@@ -275,7 +269,7 @@ def gerar_grafo_interativo():
         "stabilization": true
     }
     }
-        """)
+    """)
 
     html = net.generate_html(notebook=False)
 
@@ -288,7 +282,7 @@ def gerar_grafo_interativo():
     )
 
     controles_html = f"""
-    <div style="margin: 10px 0; font-family: Arial, sans-serif;">
+    <div style="margin: 10px 0; font-family: Arial, sans-serif; float: left; width: 60%;">
       <input id="searchBox" type="text" placeholder="Buscar bairro..."
              style="padding:4px; width:220px; margin-right:8px;" />
       <button onclick="searchNode()" style="padding:4px 10px;">Buscar</button>
@@ -308,6 +302,17 @@ def gerar_grafo_interativo():
         <input type="checkbox" id="togglePath" onchange="togglePathHighlight()" />
         Destacar percurso Nova Descoberta → Boa Viagem (Setúbal)
       </label>
+    </div>
+
+    <!-- Botões alinhados à direita -->
+    <div style="float: right; width: 30%; margin-top: 20px;">
+        <button onclick="window.open('visualizacoesPt1/histograma_graus.png', '_blank')" style="padding: 4px 10px; margin-bottom: 10px; width: 100%;">Histograma de Graus</button>
+        <br>
+        <button onclick="window.open('visualizacoesPt1/mapa_cores.html', '_blank')" style="padding: 4px 10px; margin-bottom: 10px; width: 100%;">Mapa de Cores</button>
+        <br>
+        <button onclick="window.open('visualizacoesPt1/subgrafo_top10_grau.html', '_blank')" style="padding: 4px 10px; margin-bottom: 10px; width: 100%;">Top 10 Subgrafos</button>
+        <br>
+        <button onclick="window.open('visualizacoespt2/distribuicao_graus.png', '_blank')" style="padding: 4px 10px; width: 100%;">Distribuição de Graus (parte 2)</button>
     </div>
     """
 
@@ -352,7 +357,6 @@ def gerar_grafo_interativo():
       }
 
       function highlightPath(pathNodes) {
-        // reseta cores originais
         var nodeUpdates = [];
         for (var id in originalNodeColors) {
           nodeUpdates.push({id: id, color: {background: originalNodeColors[id]}});
@@ -374,7 +378,6 @@ def gerar_grafo_interativo():
           return;
         }
 
-        // destaca nós do caminho
         var pathNodeUpdates = [];
         for (var j = 0; j < pathNodes.length; j++) {
           pathNodeUpdates.push({
@@ -384,7 +387,6 @@ def gerar_grafo_interativo():
         }
         nodes.update(pathNodeUpdates);
 
-        // destaca arestas do caminho
         var pathEdgeUpdates = [];
         for (var k = 0; k < pathNodes.length - 1; k++) {
           var a = pathNodes[k];
@@ -522,7 +524,6 @@ def gerar_grafo_interativo():
     saida = out_dir / "grafo_interativo.html"
     with open(saida, "w", encoding="utf-8") as f:
         f.write(html)
-
 
 
 
