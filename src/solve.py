@@ -272,7 +272,11 @@ def gerar_grafo_interativo():
         <br>
         <button onclick="window.open('visualizacoesPt1/subgrafo_top10_grau.html', '_blank')" style="padding: 4px 10px; margin-bottom: 10px; width: 100%;">Top 10 Subgrafos</button>
         <br>
-        <button onclick="window.open('visualizacoespt2/distribuicao_graus.png', '_blank')" style="padding: 4px 10px; width: 100%;">Distribuição de Graus (parte 2)</button>
+        <button onclick="window.open('visualizacoespt2/distribuicao_graus.png', '_blank')" style="padding: 4px 10px; margin-bottom: 10px; width: 100%;">Distribuição de Graus (parte 2)</button>
+        <br>
+        <button onclick="window.open('visualizacoespt2/amostra_grafo.html', '_blank')" style="padding: 4px 10px; margin-bottom: 10px; width: 100%;">amostra do grafo (parte 2)</button>
+        <br>
+        <button onclick="window.open('visualizacoespt2/heatmap_distancias.png', '_blank')" style="padding: 4px 10px; width: 100%;">heatmap de distancias (parte 2)</button>
     </div>
     """
 
