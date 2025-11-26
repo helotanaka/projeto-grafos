@@ -55,14 +55,12 @@ def calcular_distancias():
             bx_norm = _normalize(bx_raw)
             by_norm = _normalize(by_raw)
 
-            # aplica alias para o caminho de setubal -> BV
             bx_obg = ALIAS_BAIRROS.get(bx_norm, bx_norm)
             by_obg = ALIAS_BAIRROS.get(by_norm, by_norm)
 
             # nó obrigatório
             via_node = MANDATORY_VIA.get((bx_norm, by_norm))
 
-            # valida existência no grafo
             if not G.tem_no(bx_obg):
                 raise KeyError(f"Bairro_X '{bx_raw}' não existe no grafo (normalizado: '{bx_obg}').")
             if not G.tem_no(by_obg):
@@ -70,7 +68,6 @@ def calcular_distancias():
             if via_node is not None and not G.tem_no(via_node):
                 raise KeyError(f"Nó obrigatório '{via_node}' não existe no grafo.")
 
-            # Dijkstra com ou sem o nó obrigatório
             if via_node is None:
                 custo = dijkstra_path_length(G, bx_obg, by_obg)
                 caminho = dijkstra_path(G, bx_obg, by_obg)
@@ -81,12 +78,11 @@ def calcular_distancias():
                 custo2 = dijkstra_path_length(G, via_node, by_obg)
                 cam2 = dijkstra_path(G, via_node, by_obg)
 
-                caminho = cam1 + cam2[1:]  # evita duplicar o via_node
+                caminho = cam1 + cam2[1:]
                 custo = float(custo1) + float(custo2)
 
             resultados.append([end_x, end_y, bx_raw, by_raw, custo, " -> ".join(caminho)])
 
-            # JSON para cada par ordenado
             json_name = f"percurso_{_slug(bx_raw)}_{_slug(by_raw)}.json"
             with open(out_dir / json_name, "w", encoding="utf-8") as jf:
                 json.dump(
@@ -108,7 +104,6 @@ def calcular_distancias():
                         jf, ensure_ascii=False, indent=2
                     )
 
-    # Salva o CSV final
     with open(out_dir / "distancias_enderecos.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["X", "Y", "bairro_X", "bairro_Y", "custo", "caminho"])
@@ -119,13 +114,13 @@ def gerar_grafo_interativo():
     from pyvis.network import Network
     import json as _json
 
-    base = Path(__file__).resolve().parent.parent   # raiz do projeto
+    base = Path(__file__).resolve().parent.parent
     data_dir = base / "data"
     out_dir = base / "out"
     out_dir.mkdir(exist_ok=True)
 
     G = Graph()
-    label_map = {}  # nome normalizado -> nome original
+    label_map = {}
     adj = {}
 
     with open(data_dir / "adjacencias_bairros.csv", encoding="utf-8") as f:
@@ -140,15 +135,13 @@ def gerar_grafo_interativo():
 
             G.adicionar_aresta(u, v, w)
 
-            # guarda nome "bonito" pra tooltip/label
             label_map.setdefault(u, u_raw)
             label_map.setdefault(v, v_raw)
 
-            # adjacência (grafo não-direcionado)
             adj.setdefault(u, []).append((v, w))
             adj.setdefault(v, []).append((u, w))
 
-    microrregioes = {}  # nome_normalizado -> microrregiao
+    microrregioes = {}
     try:
         with open(data_dir / "bairros_recife.csv", encoding="utf-8") as f:
             reader = csv.DictReader(f)
@@ -165,24 +158,26 @@ def gerar_grafo_interativo():
         pass
 
     def _densidade_ego(no: str) -> float:
+
         vizinhos = [v for v, _w in G.vizinhos(no)]
-        k = len(vizinhos)
-        if k <= 1:
+        vizinhos.append(no)
+
+        num_nos_ego = len(vizinhos)
+
+        if num_nos_ego < 2:
             return 0.0
 
-        viz_set = set(vizinhos)
-        # conta arestas entre vizinhos (sem contar 2x)
-        edges = 0
-        for i in range(k):
-            vi = vizinhos[i]
-            viz_vi = {x for x, _w in G.vizinhos(vi)} & viz_set
-            for j in range(i + 1, k):
-                vj = vizinhos[j]
-                if vj in viz_vi:
-                    edges += 1
+        arestas = 0
+        for i in range(num_nos_ego):
+            for j in range(i + 1, num_nos_ego):
+                u, v = sorted([vizinhos[i], vizinhos[j]])
+                if v in G.adj.get(u, {}):
+                    arestas += 1
 
-        max_edges = k * (k - 1) / 2
-        return float(edges) / max_edges if max_edges > 0 else 0.0
+        # Calcula a densidade com a fórmula que ta no pdf da laura
+        densidade = (2 * arestas) / (num_nos_ego * (num_nos_ego - 1))
+
+        return densidade
 
     stats = {}  # nome_normalizado -> dict com grau, microrregiao, densidade_ego, label
     for u in G.nos():
@@ -208,7 +203,6 @@ def gerar_grafo_interativo():
     mic_colors = {}
     for idx, mic in enumerate(mic_set):
         if mic == "?":
-            #deixa a cor padrão pros que não têm microrregião
             mic_colors[mic] = default_node_color
         else:
             mic_colors[mic] = palette[idx % len(palette)]
@@ -229,7 +223,7 @@ def gerar_grafo_interativo():
     net = Network(height="750px", width="100%", notebook=False, directed=False)
     net.barnes_hut()
 
-    # adiciona nós com tooltip e cor por microrregião
+    # tooltip e cor por microrregião
     for u, info in stats.items():
         tooltip = (
             f"Bairro: {info['label']}; "
@@ -529,7 +523,6 @@ def gerar_grafo_interativo():
     with open(saida, "w", encoding="utf-8") as f:
         f.write(html)
 
-    print(f"Grafo interativo salvo em: {saida}")
 
 
 
@@ -539,7 +532,6 @@ def bfs():
     out_dir = base /"out"/ "parte2"/ "BFS"
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Monta o grafo a partir de LRH2016_00_Base_Completa.csv
     G = Graph()
     with open(data_dir / "LRH2016_00_Base_Completa.csv", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -561,7 +553,6 @@ def bfs():
 
             G.adicionar_aresta(mun_a, mun_b, custo)
 
-    # Lê enderecos_parte2.csv
     with open(data_dir / "enderecos_parte2.csv", encoding="utf-8") as f:
         reader = csv.DictReader(f)
 
@@ -598,7 +589,6 @@ def bfs():
                 print(f"Camadas: {len(camadas)} níveis")
                 print(f"Ciclos armazenados: {len(ciclos)}")
 
-            # 3Gera nome de arquivo específico para cada percurso
             nome_arquivo = f"bfs_{inicio}_{destino}.json"
             arquivo_saida = out_dir / nome_arquivo
 
@@ -613,7 +603,6 @@ def dfs():
     out_dir = base / "out" / "parte2"/ "DFS"
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Monta o grafo a partir de LRH2016_00_Base_Completa.csv
     G = Graph()
     with open(data_dir / "LRH2016_00_Base_Completa.csv", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -633,10 +622,8 @@ def dfs():
             except ValueError:
                 continue
 
-            # grafo não-direcionado
             G.adicionar_aresta(mun_a, mun_b, custo)
 
-    # Lê enderecos_parte2.csv
     with open(data_dir / "enderecos_parte2.csv", encoding="utf-8") as f:
         reader = csv.DictReader(f)
 
@@ -665,7 +652,7 @@ def dfs():
                     "fonte": inicio,
                     "destino": destino,
                     "ordem": ordem,
-                    "camadas": camadas,  # profundidade 
+                    "camadas": camadas,
                     "ciclos": ciclos,
                 }
 
@@ -673,11 +660,8 @@ def dfs():
                 print(f"Camadas (profundidade DFS): {len(camadas)} níveis")
                 print(f"Ciclos armazenados: {len(ciclos)}")
 
-            # Gera nome de arquivo específico para cada percurso
             nome_arquivo = f"dfs_{inicio}_{destino}.json"
             arquivo_saida = out_dir / nome_arquivo
 
             with open(arquivo_saida, "w", encoding="utf-8") as jf:
                 json.dump(resultado, jf, ensure_ascii=False, indent=2)
-
-            print(f"JSON salvo em: {arquivo_saida}")
