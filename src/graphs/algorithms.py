@@ -62,17 +62,17 @@ def dijkstra_path(grafo: Graph, origem: str, destino: str) -> List[str]:
     caminho_existe = False
 
     while fila_prioridade:
-        custo_atual, no_atual = heappop(fila_prioridade)
+        custo_acumulado, no_atual = heappop(fila_prioridade)
 
         if no_atual == destino:
             caminho_existe = True
             break
 
-        if custo_atual > custo_minimo.get(no_atual, float('inf')):
+        if custo_acumulado > custo_minimo.get(no_atual, float('inf')):
             continue
 
         for no_vizinho, peso_aresta in grafo.vizinhos(no_atual):
-            novo_custo_total = custo_atual + peso_aresta
+            novo_custo_total = custo_acumulado + peso_aresta
             
             if novo_custo_total < custo_minimo.get(no_vizinho, float('inf')):
                 custo_minimo[no_vizinho] = novo_custo_total
