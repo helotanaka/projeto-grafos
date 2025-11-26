@@ -46,62 +46,82 @@ def _weight_function(weight: str | Callable):
 def _edge_as_data(weight: float):
     return {"weight": weight}
 
-def _dijkstra_multisource(G: Graph, sources, weight_fn, target=None):
-    dist: Dict[str, float] = {}
-    seen: Dict[str, float] = {}
-    pred: Dict[str, List[str]] = {}
-    fringe: List[Tuple[float, str]] = []
 
-    for s in sources:
-        seen[s] = 0.0
-        heappush(fringe, (0.0, s))
-        pred[s] = []
+def dijkstra_path(grafo: Graph, origem: str, destino: str) -> List[str]:
+    if not grafo.tem_no(origem):
+        raise ValueError(f"Origem: '{origem}' não está no grafo.")
+    if not grafo.tem_no(destino):
+        raise ValueError(f"Destino: '{destino}' não está no grafo.")
+    if grafo.possui_peso_negativo():
+        raise ValueError("Peso negativo encontrado.")
 
-    while fringe:
-        d, v = heappop(fringe)
-        if v in dist:
-            continue
-        dist[v] = d
-        if v == target:
+    custo_minimo: Dict[str, float] = {origem: 0.0}
+    no_predecessor: Dict[str, str] = {}
+    fila_prioridade: List[Tuple[float, str]] = [(0.0, origem)]
+    
+    caminho_existe = False
+
+    while fila_prioridade:
+        custo_atual, no_atual = heappop(fila_prioridade)
+
+        if no_atual == destino:
+            caminho_existe = True
             break
 
-        for u, w in G.vizinhos(v):
-            cost = weight_fn(v, u, _edge_as_data(w))
-            if cost is None:
-                continue
-            vu_dist = d + cost
-            if u not in dist and (u not in seen or vu_dist < seen[u]):
-                seen[u] = vu_dist
-                heappush(fringe, (vu_dist, u))
-                pred[u] = [v]
-            elif vu_dist == seen.get(u):
-                pred[u].append(v)
-    return dist, pred
+        if custo_atual > custo_minimo.get(no_atual, float('inf')):
+            continue
 
-def dijkstra_path(G: Graph, source: str, target: str, weight: str | Callable = "weight") -> List[str]:
-    if source not in G.nos():
-        raise NodeNotFound(source)
-    if target not in G.nos():
-        raise NodeNotFound(target)
-    weight_fn = _weight_function(weight)
-    dist, pred = _dijkstra_multisource(G, [source], weight_fn, target)
-    if target not in dist:
-        raise NoPath(f"No path from {source} to {target}")
-    path = [target]
-    while pred[path[-1]]:
-        path.append(pred[path[-1]][0])
-    path.reverse()
-    return path
+        for no_vizinho, peso_aresta in grafo.vizinhos(no_atual):
+            novo_custo_total = custo_atual + peso_aresta
+            
+            if novo_custo_total < custo_minimo.get(no_vizinho, float('inf')):
+                custo_minimo[no_vizinho] = novo_custo_total
+                no_predecessor[no_vizinho] = no_atual
+                heappush(fila_prioridade, (novo_custo_total, no_vizinho))
 
-def dijkstra_path_length(G: Graph, source: str, target: str, weight: str | Callable = "weight") -> float:
-    if source not in G.nos():
-        raise NodeNotFound(source)
-    if target not in G.nos():
-        raise NodeNotFound(target)
-    dist, _ = _dijkstra_multisource(G, [source], _weight_function(weight), target)
-    if target not in dist:
-        raise NoPath(f"No path from {source} to {target}")
-    return dist[target]
+    if not caminho_existe:
+        return []
+
+    melhor_caminho = []
+    passo_atual = destino
+    
+    while passo_atual != origem:
+        melhor_caminho.append(passo_atual)
+        passo_atual = no_predecessor[passo_atual]
+        
+    melhor_caminho.append(origem)
+    
+    return melhor_caminho[::-1]
+
+def dijkstra_path_length(grafo: Graph, origem: str, destino: str) -> float:    
+    if not grafo.tem_no(origem):
+        raise ValueError(f"Origem: '{origem}' não está no grafo.")
+    if not grafo.tem_no(destino):
+        raise ValueError(f"Destino: '{destino}' não está no grafo.")
+    if grafo.possui_peso_negativo():
+        raise ValueError("Peso negativo encontrado.")
+
+    custo_minimo: Dict[str, float] = {origem: 0.0}
+    
+    fila_prioridade: List[Tuple[float, str]] = [(0.0, origem)]
+    
+    while fila_prioridade:
+        custo_acumulado, no_atual = heappop(fila_prioridade)
+
+        if no_atual == destino:
+            return custo_acumulado
+
+        if custo_acumulado > custo_minimo.get(no_atual, float('inf')):
+            continue
+
+        for no_vizinho, peso_aresta in grafo.vizinhos(no_atual):
+            novo_custo_total = custo_acumulado + peso_aresta
+            
+            if novo_custo_total < custo_minimo.get(no_vizinho, float('inf')):
+                custo_minimo[no_vizinho] = novo_custo_total
+                heappush(fila_prioridade, (novo_custo_total, no_vizinho))
+
+    return float('inf')
 
 def bellman_ford(
     G: Graph,
