@@ -1,4 +1,4 @@
-<img width="333" height="613" alt="image" src="https://github.com/user-attachments/assets/ca56abea-345a-4d00-883c-af0527200369" /># Projeto da Disciplina de Grafos - CESAR School 2025.2
+Disciplina de Grafos - CESAR School 2025.2
 
 Instalar os requirements utilizando: 
 ```bash
