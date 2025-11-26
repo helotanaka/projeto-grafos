@@ -13,7 +13,7 @@ arestas = [(caminho[i], caminho[i + 1]) for i in range(len(caminho) - 1)]
 
 posicoes = {}
 for i, bairro in enumerate(caminho):
-    posicoes[bairro] = (0, -i)  # x=0 fixo, y negativo para descer
+    posicoes[bairro] = (0, -i)
 
 # Desenho da arvore
 plt.figure(figsize=(6, len(caminho) * 0.6))
