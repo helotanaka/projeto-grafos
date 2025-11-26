@@ -64,20 +64,6 @@ def calcular_distancias():
                     jf, ensure_ascii=False, indent=2
                 )
 
-            # JSON exigido para Nova Descoberta -> Setúbal
-            if (bx_norm, by_norm) == ("nova descoberta", "setubal"):
-                with open(out_dir / "percurso_nova_descoberta_setubal.json", "w", encoding="utf-8") as jf:
-                    json.dump(
-                        {
-                            "origem": bx_raw,
-                            "destino": by_raw,
-                            "no_obrigatorio": "Boa Viagem (Setúbal)",
-                            "custo": custo,
-                            "caminho": caminho,
-                        },
-                        jf, ensure_ascii=False, indent=2
-                    )
-
     with open(out_dir / "distancias_enderecos.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["X", "Y", "bairro_X", "bairro_Y", "custo", "caminho"])
