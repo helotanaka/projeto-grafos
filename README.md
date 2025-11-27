@@ -18,3 +18,4 @@
 1) Rodar BFS direcionado: *python -m src.cli --bfs*
 2) Rodar DFS direcionado: *python -m src.cli --dfs*
 3) Executar testes de Dijkstra + Bellman–Ford: *python -B -m tests.cli_parte2 --calc-enderecos-parte2*
+4) Executar as visualizações: *python -m src.visualizacoespt2*
