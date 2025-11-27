@@ -13,7 +13,7 @@ python -m src.graphs.io
 ```bash
 python -m src.global_metrics_calculator
 ```
-4) Gerar análises específicas:
+3) Gerar análises específicas:
 ```bash
 python -m src.get_bairro-grau
 ```
@@ -23,23 +23,23 @@ python -m src.get_bairro_maior_grau
 ```bash
 python -m src.get_bairro_mais_denso
 ```
-6) Executar Dijkstra para todos os endereços:
+4) Executar Dijkstra para todos os endereços:
 ```bash
 python -m src.cli --calc-enderecos
 ```
-8) Gerar a árvore do percurso obrigatório:
+5) Gerar a árvore do percurso obrigatório:
 ```bash
 python -m src.gerar_arvore_percurso
 ```
-9) Gerar grafo interativo em HTML:
+6) Gerar grafo interativo em HTML:
 ```bash
 python -m src.cli --grafo-interativo
 ```
-10) Visualizações :
+7) Visualizações :
 ```bash
 python -m src.run_viz
 ```
-Colocar o path do grafo interativo no browser para vizualizar
+8) Colocar o path do grafo interativo no browser para vizualizar
 
 ## Segunda parte: Ligações Rodoviárias e Hidroviárias (IBGE 2016)
 1) Rodar BFS direcionado:
