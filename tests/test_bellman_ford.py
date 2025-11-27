@@ -7,11 +7,10 @@ from src.graphs.graph import Graph
 from src.graphs.algorithms import (
     bellman_ford_path,
     bellman_ford_path_length,
-    NetworkXNoPath,
-    NetworkXNegativeCycle,
+    NoPath,
+    NegativeCycle,
     NodeNotFound,
 )
-
 
 def _slug(s: str) -> str:
     s = unicodedata.normalize("NFKD", str(s))
@@ -19,6 +18,57 @@ def _slug(s: str) -> str:
     s = re.sub(r"[^a-zA-Z0-9]+", "_", s.strip().lower())
     return s.strip("_")
 
+def verificar_ciclo_no_caminho(caminho):
+
+    if not caminho or len(caminho) < 2:
+        return "sem_ciclo", None
+    
+    if caminho[0] == caminho[-1]:
+        return "ciclo_completo", caminho
+    
+    nos_visitados = {}
+    for i, no in enumerate(caminho):
+        if no in nos_visitados:
+            inicio_ciclo = nos_visitados[no]
+            subciclo = caminho[inicio_ciclo:i+1]
+            
+            if inicio_ciclo == 0 and i == len(caminho) - 1:
+                return "ciclo_completo", subciclo
+            else:
+                return "caminho_com_ciclo", subciclo
+        nos_visitados[no] = i
+    
+    return "sem_ciclo", None
+
+def analisar_ciclo_negativo(G, caminho, custo, origem, destino, excecao_ciclo=False):
+    if excecao_ciclo:
+        tipo_estrutural, _ = verificar_ciclo_no_caminho(caminho)
+        
+        if tipo_estrutural == "ciclo_completo":
+            return True
+        else:
+            return False
+    
+    if custo is not None and custo < 0:
+        tipo_estrutural, _ = verificar_ciclo_no_caminho(caminho)
+        
+        if tipo_estrutural == "ciclo_completo":
+            return True
+        
+        if caminho and len(caminho) >= 2:
+            ultimo_no = caminho[-1]
+            primeiro_no = caminho[0]
+            
+            try:
+                vizinhos_do_ultimo = [v for v, _ in G.vizinhos(ultimo_no)]
+                if primeiro_no in vizinhos_do_ultimo:
+                    return True
+            except:
+                pass
+        
+        return False
+    
+    return False
 
 def calcular_distancias_bellman_ford():
     inicio_total = time()
@@ -69,7 +119,6 @@ def calcular_distancias_bellman_ford():
         return
 
     resultados = []
-
     tempos_calculo = []
 
     try:
@@ -88,12 +137,18 @@ def calcular_distancias_bellman_ford():
 
                 custo = None
                 caminho = []
+                tem_ciclo_negativo = False
+                excecao_ciclo_negativo = False
 
                 if not G.tem_no(origem):
                     print(f"[{idx}/{total_rotas}] Origem não existe: {origem}")
+                    resultados.append([origem, destino, custo, ""])
+                    continue
 
                 elif not G.tem_no(destino):
                     print(f"[{idx}/{total_rotas}] Destino não existe: {destino}")
+                    resultados.append([origem, destino, custo, ""])
+                    continue
 
                 else:
                     inicio_rota = time()
@@ -106,32 +161,35 @@ def calcular_distancias_bellman_ford():
                             raise TimeoutError(f"Timeout de {timeout_segundos}s atingido")
 
                         caminho = bellman_ford_path(G, origem, destino)
+                        
+                        tem_ciclo_negativo = analisar_ciclo_negativo(
+                            G, caminho, custo, origem, destino, excecao_ciclo_negativo
+                        )
 
                         tempo_rota = time() - inicio_rota
                         tempos_calculo.append(tempo_rota)
 
-                    except NetworkXNegativeCycle as e:
+                    except NegativeCycle as e:
+                        excecao_ciclo_negativo = True
                         custo = e.cost if hasattr(e, "cost") else None
                         caminho = e.path if hasattr(e, "path") else []
+
+                        tem_ciclo_negativo = analisar_ciclo_negativo(
+                            G, caminho, custo, origem, destino, excecao_ciclo_negativo
+                        )
 
                         tempo_rota = time() - inicio_rota
                         tempos_calculo.append(tempo_rota)
 
                         if caminho:
-                            print(
-                                "    Caminho encontrado (pode não ser mínimo): "
-                                + " -> ".join(caminho[:5])
-                                + "..."
-                            )
+                            print(f"    Caminho: {' -> '.join(caminho[:5])}...")
                         if custo is not None:
                             try:
-                                print(
-                                    f"    Custo (pode não ser mínimo): {float(custo):.2f}"
-                                )
+                                print(f"    Custo: {float(custo):.2f}")
                             except (TypeError, ValueError):
-                                print(f"    Custo (pode não ser mínimo): {custo}")
+                                print(f"    Custo: {custo}")
 
-                    except NetworkXNoPath:
+                    except NoPath:
                         print(f"[{idx}/{total_rotas}] Sem caminho: {origem} → {destino}")
 
                     except NodeNotFound as e:
@@ -139,9 +197,7 @@ def calcular_distancias_bellman_ford():
 
                     except TimeoutError:
                         print(f"[{idx}/{total_rotas}] TIMEOUT: {origem} → {destino}")
-                        print(
-                            "    Rota demorou mais de 30s - possível ciclo negativo complexo"
-                        )
+                        print("    Rota demorou mais de 30s - possível ciclo negativo complexo")
 
                     except Exception as e:
                         print(f"[{idx}/{total_rotas}] Erro desconhecido: {e}")
@@ -151,18 +207,16 @@ def calcular_distancias_bellman_ford():
                 resultados.append([origem, destino, custo, caminho_str])
 
                 json_name = f"percurso_{_slug(origem)}_{_slug(destino)}.json"
+                json_data = {
+                    "origem": origem,
+                    "destino": destino,
+                    "custo": custo,
+                    "caminho": caminho,
+                    "tem_ciclo_negativo": tem_ciclo_negativo,
+                }
+                
                 with open(json_dir / json_name, "w", encoding="utf-8") as jf:
-                    json.dump(
-                        {
-                            "origem": origem,
-                            "destino": destino,
-                            "custo": custo,
-                            "caminho": caminho,
-                        },
-                        jf,
-                        ensure_ascii=False,
-                        indent=2,
-                    )
+                    json.dump(json_data, jf, ensure_ascii=False, indent=2)
 
     except FileNotFoundError:
         print("ERRO: Arquivo de endereços não encontrado.")
@@ -176,7 +230,6 @@ def calcular_distancias_bellman_ford():
         w.writerows(resultados)
 
     tempo_total = time() - inicio_total
-
     memoria_pico = tracemalloc.get_traced_memory()
     tracemalloc.stop()
 

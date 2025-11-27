@@ -6,7 +6,7 @@ from src.graphs.graph import Graph
 from src.graphs.algorithms import (
     dijkstra_path,
     dijkstra_path_length,
-    NetworkXNoPath,
+    NoPath,
 )
 
 
@@ -75,7 +75,7 @@ def calcular_distancias():
             try:
                 custo = dijkstra_path_length(G, origem, destino)
                 caminho = dijkstra_path(G, origem, destino)
-            except NetworkXNoPath:
+            except NoPath:
                 custo = None
                 caminho = []
 
