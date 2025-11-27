@@ -42,7 +42,6 @@ def measure_time_and_memory(fn, *args, measure_memory=True, **kwargs):
 
 
 #  Métricas BFS
-
 def run_bfs_metrics(G: graph.Graph, sources: List[str]) -> Dict[str, Any]:
     results = {}
     for s in sources:
@@ -64,7 +63,6 @@ def run_bfs_metrics(G: graph.Graph, sources: List[str]) -> Dict[str, Any]:
 
 
 #  Métricas DFS
-
 def run_dfs_metrics(G: graph.Graph, sources: List[str]) -> Dict[str, Any]:
     results = {}
     for s in sources:
@@ -85,8 +83,7 @@ def run_dfs_metrics(G: graph.Graph, sources: List[str]) -> Dict[str, Any]:
     return results
 
 
-#  Métricas Dijkstra
-
+#  Métricas Dijkstra (VERSÃO COM CORREÇÃO)
 def run_dijkstra_metrics(G: graph.Graph, pairs: List[Tuple[str, str]]) -> Dict[str, Any]:
     results = {}
     for (source, target) in pairs:
@@ -105,15 +102,25 @@ def run_dijkstra_metrics(G: graph.Graph, pairs: List[Tuple[str, str]]) -> Dict[s
                 "distance": dist,
                 "path_length": len(path),
             }
+
+        except ValueError as e:
+            if "negativo" in str(e).lower():
+                results[f"{source}->{target}"] = {
+                    "error": "Negative weight detected (Dijkstra not allowed)"
+                }
+            else:
+                results[f"{source}->{target}"] = {"error": str(e)}
+
         except NodeNotFound as e:
             results[f"{source}->{target}"] = {"error": str(e)}
+
         except NoPath:
             results[f"{source}->{target}"] = {"error": "No path"}
+
     return results
 
 
 #  Métricas Bellman-Ford
-
 def run_bellman_ford_metrics(G: graph.Graph, pairs: List[Tuple[str, str]]) -> Dict[str, Any]:
     results = {}
     for (source, target) in pairs:
@@ -132,21 +139,24 @@ def run_bellman_ford_metrics(G: graph.Graph, pairs: List[Tuple[str, str]]) -> Di
                 "distance": dist,
                 "path_length": len(path),
             }
+
         except NegativeCycle as e:
             results[f"{source}->{target}"] = {
                 "error": "Negative cycle detected",
                 "cycle_path": e.path,
                 "cost": e.cost,
             }
+
         except NoPath:
             results[f"{source}->{target}"] = {"error": "No path"}
+
         except NodeNotFound as e:
             results[f"{source}->{target}"] = {"error": str(e)}
+
     return results
 
 
-
-
+#  Função principal — gera o relatório completo
 def run_full_metrics(
     G: graph.Graph,
     bfs_sources: List[str],
@@ -175,11 +185,11 @@ def run_full_metrics(
 
     return report
 
-#  EXECUÇÃO AUTOMÁTICA — sem CLI
 
+#  EXECUÇÃO AUTOMÁTICA — sem CLI
 if __name__ == "__main__":
 
-    OUTPUT_FILE = "out/parte2_report.json"
+    OUTPUT_FILE = "out/parte2/parte2_report.json"
 
     print("Carregando grafo do dataset CSV...")
     G = carregar_grafo_dataset()

@@ -7,21 +7,21 @@
     "metrics": {
         "BFS": {
             "Santo Antônio do Sudoeste": {
-                "time": 0.0777925000002142,
-                "memory_peak_bytes": 494040,
+                "time": 0.046819600014714524,
+                "memory_peak_bytes": 494152,
                 "layers": 9,
                 "total_nodes_visited": 4251,
                 "cycles_found": 10
             },
             "Planura": {
-                "time": 0.07017120000091381,
+                "time": 0.04181490000337362,
                 "memory_peak_bytes": 425312,
                 "layers": 10,
                 "total_nodes_visited": 4251,
                 "cycles_found": 10
             },
             "Wanderlândia": {
-                "time": 0.05622049998783041,
+                "time": 0.03550249998806976,
                 "memory_peak_bytes": 424904,
                 "layers": 9,
                 "total_nodes_visited": 4251,
@@ -30,21 +30,21 @@
         },
         "DFS": {
             "Santo Antônio do Sudoeste": {
-                "time": 0.0019179999944753945,
+                "time": 0.000756199995521456,
                 "memory_peak_bytes": 41352,
                 "layers": 15,
                 "total_nodes_visited": 27,
                 "cycles_found": 10
             },
             "Planura": {
-                "time": 0.0017539999971631914,
+                "time": 0.0008497000089846551,
                 "memory_peak_bytes": 41352,
                 "layers": 22,
                 "total_nodes_visited": 35,
                 "cycles_found": 10
             },
             "Wanderlândia": {
-                "time": 0.0011931999906664714,
+                "time": 0.0006494999979622662,
                 "memory_peak_bytes": 41352,
                 "layers": 22,
                 "total_nodes_visited": 34,
@@ -53,59 +53,29 @@
         },
         "Dijkstra": {
             "Santo Antônio do Sudoeste->Planura": {
-                "compute_path_time": 0.2529562999989139,
-                "compute_path_memory": 839360,
-                "compute_distance_time": 0.19015959999524057,
-                "compute_distance_memory": 771096,
-                "distance": 1086.0,
-                "path_length": 12
+                "error": "Negative weight detected (Dijkstra not allowed)"
             },
             "Santo Antônio do Sudoeste->Wanderlândia": {
-                "compute_path_time": 0.11655449999670964,
-                "compute_path_memory": 649856,
-                "compute_distance_time": 0.12386859999969602,
-                "compute_distance_memory": 649856,
-                "distance": 721.0,
-                "path_length": 8
+                "error": "Negative weight detected (Dijkstra not allowed)"
             },
             "Planura->Santo Antônio do Sudoeste": {
-                "compute_path_time": 0.006454300004406832,
-                "compute_path_memory": 91456,
-                "compute_distance_time": 0.007547800007159822,
-                "compute_distance_memory": 91456,
-                "distance": -850.0,
-                "path_length": 8
+                "error": "Negative weight detected (Dijkstra not allowed)"
             },
             "Planura->Wanderlândia": {
-                "compute_path_time": 0.05852219999360386,
-                "compute_path_memory": 486304,
-                "compute_distance_time": 0.05485240000416525,
-                "compute_distance_memory": 486304,
-                "distance": -440.0,
-                "path_length": 10
+                "error": "Negative weight detected (Dijkstra not allowed)"
             },
             "Wanderlândia->Santo Antônio do Sudoeste": {
-                "compute_path_time": 0.03576699999393895,
-                "compute_path_memory": 346096,
-                "compute_distance_time": 0.02975489999516867,
-                "compute_distance_memory": 346096,
-                "distance": 800.0,
-                "path_length": 11
+                "error": "Negative weight detected (Dijkstra not allowed)"
             },
             "Wanderlândia->Planura": {
-                "compute_path_time": 0.10898079999606125,
-                "compute_path_memory": 866720,
-                "compute_distance_time": 0.13436889999138657,
-                "compute_distance_memory": 866720,
-                "distance": 710.0,
-                "path_length": 25
+                "error": "Negative weight detected (Dijkstra not allowed)"
             }
         },
         "Bellman-Ford": {
             "Santo Antônio do Sudoeste->Planura": {
-                "compute_path_time": 0.2620533000008436,
-                "compute_path_memory": 577860,
-                "compute_distance_time": 0.28028799999447074,
+                "compute_path_time": 0.14346370002022013,
+                "compute_path_memory": 581094,
+                "compute_distance_time": 0.14825979998568073,
                 "compute_distance_memory": 577916,
                 "distance": 1665.0,
                 "path_length": 7
@@ -123,33 +93,33 @@
                 "cost": -515.0
             },
             "Planura->Santo Antônio do Sudoeste": {
-                "compute_path_time": 0.16227299999445677,
+                "compute_path_time": 0.11803479999070987,
                 "compute_path_memory": 580204,
-                "compute_distance_time": 0.18185239999729674,
+                "compute_distance_time": 0.12170839999453165,
                 "compute_distance_memory": 577364,
                 "distance": -845.0,
                 "path_length": 6
             },
             "Planura->Wanderlândia": {
-                "compute_path_time": 0.36375129999942146,
+                "compute_path_time": 0.21934079998754896,
                 "compute_path_memory": 577364,
-                "compute_distance_time": 0.43686180000077,
+                "compute_distance_time": 0.21725029998924583,
                 "compute_distance_memory": 577364,
                 "distance": -1350.0,
                 "path_length": 6
             },
             "Wanderlândia->Santo Antônio do Sudoeste": {
-                "compute_path_time": 0.2434229999926174,
+                "compute_path_time": 0.12800840000272729,
                 "compute_path_memory": 579836,
-                "compute_distance_time": 0.18822899999213405,
+                "compute_distance_time": 0.1681158999854233,
                 "compute_distance_memory": 579836,
                 "distance": 295.0,
                 "path_length": 6
             },
             "Wanderlândia->Planura": {
-                "compute_path_time": 0.26147060000221245,
+                "compute_path_time": 0.18553710001287982,
                 "compute_path_memory": 579836,
-                "compute_distance_time": 0.2985413999995217,
+                "compute_distance_time": 0.16489170002751052,
                 "compute_distance_memory": 579836,
                 "distance": 1528.0,
                 "path_length": 6
