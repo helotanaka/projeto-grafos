@@ -3,14 +3,6 @@ from pathlib import Path
 from .graphs.graph import Graph
 from .graphs.algorithms import dijkstra_path, dijkstra_path_length,  bfs_ordem_camadas_ciclos_dir,  dfs_ordem_camadas_ciclos_dir
 
-ALIAS_BAIRROS = {
-    "setubal": "boa viagem",
-}
-
-# Força a passagem por BV quando for de Nova Descoberta a Setúbal
-MANDATORY_VIA = {
-    ("nova descoberta", "setubal"): "boa viagem",
-}
 
 def _normalize(nome: str) -> str:
     if nome is None:
@@ -55,38 +47,16 @@ def calcular_distancias():
             bx_norm = _normalize(bx_raw)
             by_norm = _normalize(by_raw)
 
-            # aplica alias para o caminho de setubal -> BV
-            bx_obg = ALIAS_BAIRROS.get(bx_norm, bx_norm)
-            by_obg = ALIAS_BAIRROS.get(by_norm, by_norm)
+            if not G.tem_no(bx_norm):
+                raise KeyError(f"Bairro_X '{bx_raw}' não existe no grafo (normalizado: '{bx_norm}').")
+            if not G.tem_no(by_norm):
+                raise KeyError(f"Bairro_Y '{by_raw}' não existe no grafo (normalizado: '{by_norm}').")
 
-            # nó obrigatório
-            via_node = MANDATORY_VIA.get((bx_norm, by_norm))
-
-            # valida existência no grafo
-            if not G.tem_no(bx_obg):
-                raise KeyError(f"Bairro_X '{bx_raw}' não existe no grafo (normalizado: '{bx_obg}').")
-            if not G.tem_no(by_obg):
-                raise KeyError(f"Bairro_Y '{by_raw}' não existe no grafo (normalizado: '{by_obg}').")
-            if via_node is not None and not G.tem_no(via_node):
-                raise KeyError(f"Nó obrigatório '{via_node}' não existe no grafo.")
-
-            # Dijkstra com ou sem o nó obrigatório
-            if via_node is None:
-                custo = dijkstra_path_length(G, bx_obg, by_obg)
-                caminho = dijkstra_path(G, bx_obg, by_obg)
-            else:
-                custo1 = dijkstra_path_length(G, bx_obg, via_node)
-                cam1 = dijkstra_path(G, bx_obg, via_node)
-
-                custo2 = dijkstra_path_length(G, via_node, by_obg)
-                cam2 = dijkstra_path(G, via_node, by_obg)
-
-                caminho = cam1 + cam2[1:]  # evita duplicar o via_node
-                custo = float(custo1) + float(custo2)
+            custo = dijkstra_path_length(G, bx_norm, by_norm)
+            caminho = dijkstra_path(G, bx_norm, by_norm)
 
             resultados.append([end_x, end_y, bx_raw, by_raw, custo, " -> ".join(caminho)])
 
-            # JSON para cada par ordenado
             json_name = f"percurso_{_slug(bx_raw)}_{_slug(by_raw)}.json"
             with open(out_dir / json_name, "w", encoding="utf-8") as jf:
                 json.dump(
@@ -94,21 +64,6 @@ def calcular_distancias():
                     jf, ensure_ascii=False, indent=2
                 )
 
-            # JSON exigido para Nova Descoberta -> Setúbal
-            if (bx_norm, by_norm) == ("nova descoberta", "setubal"):
-                with open(out_dir / "percurso_nova_descoberta_setubal.json", "w", encoding="utf-8") as jf:
-                    json.dump(
-                        {
-                            "origem": bx_raw,
-                            "destino": by_raw,
-                            "no_obrigatorio": "Boa Viagem (Setúbal)",
-                            "custo": custo,
-                            "caminho": caminho,
-                        },
-                        jf, ensure_ascii=False, indent=2
-                    )
-
-    # Salva o CSV final
     with open(out_dir / "distancias_enderecos.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["X", "Y", "bairro_X", "bairro_Y", "custo", "caminho"])
@@ -119,13 +74,13 @@ def gerar_grafo_interativo():
     from pyvis.network import Network
     import json as _json
 
-    base = Path(__file__).resolve().parent.parent   # raiz do projeto
+    base = Path(__file__).resolve().parent.parent
     data_dir = base / "data"
     out_dir = base / "out"
     out_dir.mkdir(exist_ok=True)
 
     G = Graph()
-    label_map = {}  # nome normalizado -> nome original
+    label_map = {}
     adj = {}
 
     with open(data_dir / "adjacencias_bairros.csv", encoding="utf-8") as f:
@@ -140,15 +95,13 @@ def gerar_grafo_interativo():
 
             G.adicionar_aresta(u, v, w)
 
-            # guarda nome "bonito" pra tooltip/label
             label_map.setdefault(u, u_raw)
             label_map.setdefault(v, v_raw)
 
-            # adjacência (grafo não-direcionado)
             adj.setdefault(u, []).append((v, w))
             adj.setdefault(v, []).append((u, w))
 
-    microrregioes = {}  # nome_normalizado -> microrregiao
+    microrregioes = {}
     try:
         with open(data_dir / "bairros_recife.csv", encoding="utf-8") as f:
             reader = csv.DictReader(f)
@@ -159,32 +112,28 @@ def gerar_grafo_interativo():
                     if not bairro_bruto:
                         continue
                     b_norm = _normalize(bairro_bruto)
-                    # se aparecer mais de uma vez, mantém a primeira microrregião
                     microrregioes.setdefault(b_norm, col)
     except FileNotFoundError:
         pass
 
     def _densidade_ego(no: str) -> float:
         vizinhos = [v for v, _w in G.vizinhos(no)]
-        k = len(vizinhos)
-        if k <= 1:
+        vizinhos.append(no)
+        num_nos_ego = len(vizinhos)
+        if num_nos_ego < 2:
             return 0.0
 
-        viz_set = set(vizinhos)
-        # conta arestas entre vizinhos (sem contar 2x)
-        edges = 0
-        for i in range(k):
-            vi = vizinhos[i]
-            viz_vi = {x for x, _w in G.vizinhos(vi)} & viz_set
-            for j in range(i + 1, k):
-                vj = vizinhos[j]
-                if vj in viz_vi:
-                    edges += 1
+        arestas = 0
+        for i in range(num_nos_ego):
+            for j in range(i + 1, num_nos_ego):
+                u, v = sorted([vizinhos[i], vizinhos[j]])
+                if v in G.adj.get(u, {}):
+                    arestas += 1
 
-        max_edges = k * (k - 1) / 2
-        return float(edges) / max_edges if max_edges > 0 else 0.0
+        densidade = (2 * arestas) / (num_nos_ego * (num_nos_ego - 1))
+        return densidade
 
-    stats = {}  # nome_normalizado -> dict com grau, microrregiao, densidade_ego, label
+    stats = {}
     for u in G.nos():
         grau = G.grau(u)
         dens = _densidade_ego(u)
@@ -208,7 +157,6 @@ def gerar_grafo_interativo():
     mic_colors = {}
     for idx, mic in enumerate(mic_set):
         if mic == "?":
-            #deixa a cor padrão pros que não têm microrregião
             mic_colors[mic] = default_node_color
         else:
             mic_colors[mic] = palette[idx % len(palette)]
@@ -229,7 +177,7 @@ def gerar_grafo_interativo():
     net = Network(height="750px", width="100%", notebook=False, directed=False)
     net.barnes_hut()
 
-    # adiciona nós com tooltip e cor por microrregião
+    # tooltip e cor por microrregião
     for u, info in stats.items():
         tooltip = (
             f"Bairro: {info['label']}; "
@@ -281,7 +229,7 @@ def gerar_grafo_interativo():
         "stabilization": true
     }
     }
-        """)
+    """)
 
     html = net.generate_html(notebook=False)
 
@@ -294,7 +242,7 @@ def gerar_grafo_interativo():
     )
 
     controles_html = f"""
-    <div style="margin: 10px 0; font-family: Arial, sans-serif;">
+    <div style="margin: 10px 0; font-family: Arial, sans-serif; float: left; width: 60%;">
       <input id="searchBox" type="text" placeholder="Buscar bairro..."
              style="padding:4px; width:220px; margin-right:8px;" />
       <button onclick="searchNode()" style="padding:4px 10px;">Buscar</button>
@@ -314,6 +262,20 @@ def gerar_grafo_interativo():
         <input type="checkbox" id="togglePath" onchange="togglePathHighlight()" />
         Destacar percurso Nova Descoberta → Boa Viagem (Setúbal)
       </label>
+    </div>
+
+    <div style="float: right; width: 30%; margin-top: 20px;">
+        <button onclick="window.open('visualizacoesPt1/histograma_graus.png', '_blank')" style="padding: 4px 10px; margin-bottom: 10px; width: 100%;">Histograma de Graus</button>
+        <br>
+        <button onclick="window.open('visualizacoesPt1/mapa_cores.html', '_blank')" style="padding: 4px 10px; margin-bottom: 10px; width: 100%;">Mapa de Cores</button>
+        <br>
+        <button onclick="window.open('visualizacoesPt1/subgrafo_top10_grau.html', '_blank')" style="padding: 4px 10px; margin-bottom: 10px; width: 100%;">Top 10 Subgrafos</button>
+        <br>
+        <button onclick="window.open('visualizacoespt2/distribuicao_graus.png', '_blank')" style="padding: 4px 10px; margin-bottom: 10px; width: 100%;">Distribuição de Graus (parte 2)</button>
+        <br>
+        <button onclick="window.open('visualizacoespt2/amostra_grafo.html', '_blank')" style="padding: 4px 10px; margin-bottom: 10px; width: 100%;">amostra do grafo (parte 2)</button>
+        <br>
+        <button onclick="window.open('visualizacoespt2/heatmap_distancias.png', '_blank')" style="padding: 4px 10px; width: 100%;">heatmap de distancias (parte 2)</button>
     </div>
     """
 
@@ -358,7 +320,6 @@ def gerar_grafo_interativo():
       }
 
       function highlightPath(pathNodes) {
-        // reseta cores originais
         var nodeUpdates = [];
         for (var id in originalNodeColors) {
           nodeUpdates.push({id: id, color: {background: originalNodeColors[id]}});
@@ -380,7 +341,6 @@ def gerar_grafo_interativo():
           return;
         }
 
-        // destaca nós do caminho
         var pathNodeUpdates = [];
         for (var j = 0; j < pathNodes.length; j++) {
           pathNodeUpdates.push({
@@ -390,7 +350,6 @@ def gerar_grafo_interativo():
         }
         nodes.update(pathNodeUpdates);
 
-        // destaca arestas do caminho
         var pathEdgeUpdates = [];
         for (var k = 0; k < pathNodes.length - 1; k++) {
           var a = pathNodes[k];
@@ -529,8 +488,6 @@ def gerar_grafo_interativo():
     with open(saida, "w", encoding="utf-8") as f:
         f.write(html)
 
-    print(f"Grafo interativo salvo em: {saida}")
-
 
 
 def bfs():
@@ -539,7 +496,6 @@ def bfs():
     out_dir = base /"out"/ "parte2"/ "BFS"
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Monta o grafo a partir de LRH2016_00_Base_Completa.csv
     G = Graph()
     with open(data_dir / "LRH2016_00_Base_Completa.csv", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -561,7 +517,6 @@ def bfs():
 
             G.adicionar_aresta(mun_a, mun_b, custo)
 
-    # Lê enderecos_parte2.csv
     with open(data_dir / "enderecos_parte2.csv", encoding="utf-8") as f:
         reader = csv.DictReader(f)
 
@@ -598,7 +553,6 @@ def bfs():
                 print(f"Camadas: {len(camadas)} níveis")
                 print(f"Ciclos armazenados: {len(ciclos)}")
 
-            # 3Gera nome de arquivo específico para cada percurso
             nome_arquivo = f"bfs_{inicio}_{destino}.json"
             arquivo_saida = out_dir / nome_arquivo
 
@@ -613,7 +567,6 @@ def dfs():
     out_dir = base / "out" / "parte2"/ "DFS"
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Monta o grafo a partir de LRH2016_00_Base_Completa.csv
     G = Graph()
     with open(data_dir / "LRH2016_00_Base_Completa.csv", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -633,10 +586,8 @@ def dfs():
             except ValueError:
                 continue
 
-            # grafo não-direcionado
             G.adicionar_aresta(mun_a, mun_b, custo)
 
-    # Lê enderecos_parte2.csv
     with open(data_dir / "enderecos_parte2.csv", encoding="utf-8") as f:
         reader = csv.DictReader(f)
 
@@ -665,7 +616,7 @@ def dfs():
                     "fonte": inicio,
                     "destino": destino,
                     "ordem": ordem,
-                    "camadas": camadas,  # profundidade 
+                    "camadas": camadas,
                     "ciclos": ciclos,
                 }
 
@@ -673,11 +624,8 @@ def dfs():
                 print(f"Camadas (profundidade DFS): {len(camadas)} níveis")
                 print(f"Ciclos armazenados: {len(ciclos)}")
 
-            # Gera nome de arquivo específico para cada percurso
             nome_arquivo = f"dfs_{inicio}_{destino}.json"
             arquivo_saida = out_dir / nome_arquivo
 
             with open(arquivo_saida, "w", encoding="utf-8") as jf:
                 json.dump(resultado, jf, ensure_ascii=False, indent=2)
-
-            print(f"JSON salvo em: {arquivo_saida}")
