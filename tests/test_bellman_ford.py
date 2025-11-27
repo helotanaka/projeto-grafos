@@ -34,8 +34,6 @@ def verificar_ciclo_no_caminho(caminho):
             
             if inicio_ciclo == 0 and i == len(caminho) - 1:
                 return "ciclo_completo", subciclo
-            else:
-                return "caminho_com_ciclo", subciclo
         nos_visitados[no] = i
     
     return "sem_ciclo", None
